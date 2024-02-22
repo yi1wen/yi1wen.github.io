@@ -87,7 +87,7 @@
 <meta property="og:description" content="reactive 用于对象的响应式方案，ref 用于 原始值的响应式方案，原因有2：原始值的赋值为原始值，对象的赋值为内存地址，也就导致原始值的形参和实参之间无引用关系，完全独立；Proxy无法对原始值代理 1234567891011function ref(val) &#123;  const wrapper &#x3D; &#123;    value: val  &#125;  Object.defi">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-21T03:16:09.000Z">
-<meta property="article:modified_time" content="2024-02-21T03:45:32.000Z">
+<meta property="article:modified_time" content="2024-02-22T02:10:10.000Z">
 <meta property="article:author" content="义依雯">
 <meta property="article:tag" content="Vue3">
 <meta name="twitter:card" content="summary">
@@ -356,11 +356,16 @@
         <p>reactive 用于对象的响应式方案，<br>ref 用于 原始值的响应式方案，<br>原因有2：原始值的赋值为原始值，对象的赋值为内存地址，也就导致原始值的形参和实参之间无引用关系，完全独立；Proxy无法对原始值代理</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ref</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = &#123;</span><br><span class="line">    <span class="attr">value</span>: val</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(wrapper, <span class="string">&#x27;_v_isRef&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">reactive</span>(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>ref 的实质是，用对象上的value属性代理原始值，再将该对象用reactive Proxy代理</p>
-<h2 id="用来处理reactive的响应丢失问题"><a href="#用来处理reactive的响应丢失问题" class="headerlink" title="用来处理reactive的响应丢失问题"></a>用来处理reactive的响应丢失问题</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// obj 是一个</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">toRef</span>(<span class="params">obj, key</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = &#123;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">      <span class="keyword">return</span> obj[key]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">val</span>) &#123;</span><br><span class="line">      obj[key] = val</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(wrapper, <span class="string">&#x27;_v_isRef&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> wrapper</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>ref 的实质是，用对象上的 value 属性代理原始值，再将该对象用 reactive Proxy代理</p>
+<span id="more"></span>
 
-<p>toRef 实现双向</p>
-<h2 id="自动脱ref"><a href="#自动脱ref" class="headerlink" title="自动脱ref"></a>自动脱ref</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为 ref类型数据创建一个 Proxy 的 get 和 set 中 自动脱 ref</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> proxyRefs</span><br></pre></td></tr></table></figure>
+<h2 id="用来处理reactive的响应丢失问题"><a href="#用来处理reactive的响应丢失问题" class="headerlink" title="用来处理reactive的响应丢失问题"></a>用来处理reactive的响应丢失问题</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// toRef 使 wrapper 和 obj 的引用的内存地址一样，相当于对于这个值有两个访问器和两个修改器</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">toRef</span>(<span class="params">obj, key</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = &#123;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">      <span class="keyword">return</span> obj[key]</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">set</span> <span class="title function_">value</span>(<span class="params">val</span>) &#123;</span><br><span class="line">      obj[key] = val</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(wrapper, <span class="string">&#x27;_v_isRef&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> wrapper</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>toRef 实现双向响应，toRefs 遍历</p>
+<h2 id="自动脱ref"><a href="#自动脱ref" class="headerlink" title="自动脱ref"></a>自动脱ref</h2><p>为 ref类型数据创建一个 Proxy 的 get 和 set 中 判断是否是 ref 值，自动读取 value 属性</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">proxyRefs</span>(<span class="params">target</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Proxy</span>(target, &#123;</span><br><span class="line">    <span class="title function_">get</span>(<span class="params">target, key, receiver</span>) &#123;</span><br><span class="line">      <span class="keyword">const</span> value = <span class="title class_">Reflect</span>.<span class="title function_">get</span>(target, key, receiver)</span><br><span class="line">      <span class="comment">// 自动脱 ref 实现：如果读取的值是 ref，则返回它的 value 属性值</span></span><br><span class="line">      <span class="keyword">return</span> value.<span class="property">__v_isRef</span> ? value.<span class="property">value</span>: value</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>用处：1. ref, toRef, toRefs 的 value 属性  2. setup的return的包装</p>
 
       
     </div>
@@ -400,6 +405,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9ADiff/" rel="prev" title="Vue3源码：Diff">
+                Vue3源码：Diff <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -476,7 +485,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
