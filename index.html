@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/23/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8B%E6%94%B6%E9%9B%86%E5%92%8C%E8%A7%A6%E5%8F%91%E4%BE%9D%E8%B5%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -268,7 +268,144 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/" itemprop="url">Vue3源码：响应式原理</a></h1>
+                <a class="post-title-link" href="/2024/02/23/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8B%E6%94%B6%E9%9B%86%E5%92%8C%E8%A7%A6%E5%8F%91%E4%BE%9D%E8%B5%96/" itemprop="url">Vue3源码：响应式原理之track和trigger依赖</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-23T14:47:56+08:00">
+                2024-02-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="track"><a href="#track" class="headerlink" title="track"></a>track</h2><h3 id="track-总结"><a href="#track-总结" class="headerlink" title="track 总结"></a>track 总结</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** </span></span><br><span class="line"><span class="comment"> * targetMap(WeakMap) -&gt;</span></span><br><span class="line"><span class="comment"> *  -键: target(对象)</span></span><br><span class="line"><span class="comment"> *  -值(Map): depsMap</span></span><br><span class="line"><span class="comment"> *      -键: key(属性)</span></span><br><span class="line"><span class="comment"> *      -值(Set): dep: Dep:Set[ReactiveEffect]</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * targetMap = new WeakMap(&#123;</span></span><br><span class="line"><span class="comment"> *    [target]: depsMap = new Map(&#123;</span></span><br><span class="line"><span class="comment"> *        [key]: [dep = new Set([effect1,effect2])]</span></span><br><span class="line"><span class="comment"> *     &#125;)</span></span><br><span class="line"><span class="comment"> * &#125;)</span></span><br><span class="line"><span class="comment"> */</span> </span><br></pre></td></tr></table></figure>
+
+<ol>
+<li><p>装依赖的结构是三层，第一层 WeakMap，第二层 Map，第三层 Set (桶)</p>
+</li>
+<li><p>第三层是 Dep， Set 类型装 effect</p>
+</li>
+<li><p>dep 收集 effect 是用于触发依赖，effect 收集 dep 是为了更新依赖</p>
+</li>
+</ol>
+<h3 id="track-源码"><a href="#track-源码" class="headerlink" title="track 源码"></a>track 源码</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/** 收集依赖 track -&gt; 找到桶</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">target</span> - 指向的响应式对象</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">type</span> - 操作类型3</span></span><br><span class="line"><span class="comment"> *    <span class="doctag">@type</span> TrackOpTypes.GET</span></span><br><span class="line"><span class="comment"> *    <span class="doctag">@type</span> TrackOpTypes.HAS</span></span><br><span class="line"><span class="comment"> *    <span class="doctag">@type</span> TrackOpTypes.ITERATE</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">key</span> - 指向对象要追踪的key</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">track</span>(<span class="params">target: <span class="built_in">object</span>, <span class="keyword">type</span>: TrackOpTypes, key: <span class="built_in">unknown</span></span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (shouldTrack &amp;&amp; activeEffect) &#123; <span class="comment">// 不能追踪+当前活动响应式副作用函数没有值，就不收集</span></span><br><span class="line">    <span class="comment">// 第一层: 根据target取 target的deps映射Map</span></span><br><span class="line">    <span class="keyword">let</span> depsMap = targetMap.<span class="title function_">get</span>(target)</span><br><span class="line">    <span class="keyword">if</span> (!depsMap) &#123;</span><br><span class="line">      targetMap.<span class="title function_">set</span>(target, (depsMap = <span class="keyword">new</span> <span class="title class_">Map</span>()))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 第二层: 根据key属性取 对应target属性key的dep集合</span></span><br><span class="line">    <span class="keyword">let</span> dep = depsMap.<span class="title function_">get</span>(key)</span><br><span class="line">    <span class="keyword">if</span> (!dep) &#123;</span><br><span class="line">      depsMap.<span class="title function_">set</span>(key, (dep = <span class="title function_">createDep</span>()))</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 封装将要收集入dep集合的ReactiveEffect和相关信息</span></span><br><span class="line">    <span class="comment">//      &#123;activeEffect, target, type, key&#125;</span></span><br><span class="line">    <span class="keyword">const</span> eventInfo = __DEV__</span><br><span class="line">      ? &#123; <span class="attr">effect</span>: activeEffect, target, <span class="keyword">type</span>, key &#125;</span><br><span class="line">      : <span class="literal">undefined</span></span><br><span class="line"></span><br><span class="line">    <span class="title function_">trackEffects</span>(dep, eventInfo)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 收集具体effect的方法 -&gt; 是否追踪</span></span><br><span class="line"><span class="comment"> * 将activeEffect (在ReactiveEffect-&gt; effect -&gt; run()里赋值的) 存入Dep里</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">dep</span> - targetMap[target][key]</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">debuggerEventExtraInfo</span> - 将要收集进去的effect封装</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">trackEffects</span>(<span class="params"></span></span><br><span class="line"><span class="params">  dep: Dep,</span></span><br><span class="line"><span class="params">  debuggerEventExtraInfo?: DebuggerEventExtraInfo</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> shouldTrack = <span class="literal">false</span> <span class="comment">// 默认不追踪</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ...对是否追踪的判断..</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 可以追踪: effect的deps收集dep  dep收集effect</span></span><br><span class="line">  <span class="keyword">if</span> (shouldTrack) &#123;</span><br><span class="line">    dep.<span class="title function_">add</span>(activeEffect!) <span class="comment">// dep收集effect实例(activeEffect)</span></span><br><span class="line">    activeEffect!.<span class="property">deps</span>.<span class="title function_">push</span>(dep) <span class="comment">// effect实例(activeEffect) 在deps 收集dep</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="trigger"><a href="#trigger" class="headerlink" title="trigger"></a>trigger</h2><h3 id="trigger-总结"><a href="#trigger-总结" class="headerlink" title="trigger 总结"></a>trigger 总结</h3><ol>
+<li>根据触发类型，对需要触发的 Dep 处收集 effect，扁平化再包装为一个 Dep 准备触发</li>
+<li>触发的顺序是先 computed 再 watch 和 render</li>
+<li>触发的方式是有 scheduler 就 scheduler 没有就 fn</li>
+</ol>
+<h3 id="trigger-源码"><a href="#trigger-源码" class="headerlink" title="trigger 源码"></a>trigger 源码</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 都是从对象层面进行的</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">target</span> - 指向的响应式对象</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">type</span> - key属性 具体被怎么触发的type类型</span></span><br><span class="line"><span class="comment"> *   <span class="doctag">@type</span> TriggerOpTypes.CLEAR 对象层面上的</span></span><br><span class="line"><span class="comment"> *      <span class="doctag">@event</span> 执行所有targetMap[target]</span></span><br><span class="line"><span class="comment"> *   <span class="doctag">@type</span> TriggerOpTypes.ADD</span></span><br><span class="line"><span class="comment"> *   <span class="doctag">@type</span> TriggerOpTypes.SET</span></span><br><span class="line"><span class="comment"> *   <span class="doctag">@type</span> TriggerOpTypes.DELETE</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> <span class="variable">key</span> - target响应式对象 具体被触发trigger的key属性</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> newValue 新值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> oldValue 旧值</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> oldTarget 旧target</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@returns</span> </span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">trigger</span>(<span class="params"></span></span><br><span class="line"><span class="params">  target: <span class="built_in">object</span>,</span></span><br><span class="line"><span class="params">  <span class="keyword">type</span>: TriggerOpTypes,</span></span><br><span class="line"><span class="params">  key?: <span class="built_in">unknown</span>,</span></span><br><span class="line"><span class="params">  newValue?: <span class="built_in">unknown</span>,</span></span><br><span class="line"><span class="params">  oldValue?: <span class="built_in">unknown</span>,</span></span><br><span class="line"><span class="params">  oldTarget?: <span class="built_in">Map</span>&lt;<span class="built_in">unknown</span>, <span class="built_in">unknown</span>&gt; | <span class="built_in">Set</span>&lt;<span class="built_in">unknown</span>&gt;</span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> depsMap = targetMap.<span class="title function_">get</span>(target)</span><br><span class="line">  <span class="keyword">if</span> (!depsMap) &#123;  <span class="keyword">return</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 用于存放需要触发的 effect</span></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">deps</span>: (<span class="title class_">Dep</span> | <span class="literal">undefined</span>)[] = []</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 【根据触发类型 type，找出待触发的 effect】</span></span><br><span class="line">  <span class="comment">// clear：触发 target 的所有 key（触发对象的所有属性）</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">type</span> === <span class="title class_">TriggerOpTypes</span>.<span class="property">CLEAR</span>) &#123; </span><br><span class="line">    deps = [...depsMap.<span class="title function_">values</span>()]</span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 数组的 length：大于新索引的key需要被触发</span></span><br><span class="line">  <span class="keyword">else</span> <span class="keyword">if</span> (key === <span class="string">&#x27;length&#x27;</span> &amp;&amp; <span class="title function_">isArray</span>(target)) &#123; </span><br><span class="line">    <span class="keyword">const</span> newLength = <span class="title class_">Number</span>(newValue)</span><br><span class="line"></span><br><span class="line">    depsMap.<span class="title function_">forEach</span>(<span class="function">(<span class="params">dep, key</span>) =&gt;</span> &#123; </span><br><span class="line">      <span class="keyword">if</span> (key === <span class="string">&#x27;length&#x27;</span> || (!<span class="title function_">isSymbol</span>(key) &amp;&amp; key &gt;= newLength)) &#123;</span><br><span class="line">        deps.<span class="title function_">push</span>(dep)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125; </span><br><span class="line"></span><br><span class="line">  <span class="comment">// 对于单个 key，type =  SET | ADD | DELETE</span></span><br><span class="line">  <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (key !== <span class="built_in">void</span> <span class="number">0</span>) &#123;</span><br><span class="line">      deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(key))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">switch</span> (<span class="keyword">type</span>) &#123;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// ADD 添加 还会影响迭代器，数组的迭代器通过 length 属性触发</span></span><br><span class="line">      <span class="keyword">case</span> <span class="title class_">TriggerOpTypes</span>.<span class="property">ADD</span>: </span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">isArray</span>(target)) &#123; </span><br><span class="line">          deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(<span class="variable constant_">ITERATE_KEY</span>))</span><br><span class="line">          <span class="keyword">if</span> (<span class="title function_">isMap</span>(target)) &#123; </span><br><span class="line">            deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(<span class="variable constant_">MAP_KEY_ITERATE_KEY</span>))</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_">isIntegerKey</span>(key)) &#123; </span><br><span class="line">          deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(<span class="string">&#x27;length&#x27;</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// DELETE 删除：影响迭代器，数组不会？？？</span></span><br><span class="line">      <span class="keyword">case</span> <span class="title class_">TriggerOpTypes</span>.<span class="property">DELETE</span>: </span><br><span class="line">        <span class="keyword">if</span> (!<span class="title function_">isArray</span>(target)) &#123;</span><br><span class="line">          deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(<span class="variable constant_">ITERATE_KEY</span>))</span><br><span class="line">          <span class="keyword">if</span> (<span class="title function_">isMap</span>(target)) &#123;</span><br><span class="line">            deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(<span class="variable constant_">MAP_KEY_ITERATE_KEY</span>))</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// SET 设置：影响 Map 的迭代器</span></span><br><span class="line">      <span class="keyword">case</span> <span class="title class_">TriggerOpTypes</span>.<span class="property">SET</span>:</span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">isMap</span>(target)) &#123;</span><br><span class="line">          deps.<span class="title function_">push</span>(depsMap.<span class="title function_">get</span>(<span class="variable constant_">ITERATE_KEY</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> eventInfo = __DEV__</span><br><span class="line">    ? &#123; target, <span class="keyword">type</span>, key, newValue, oldValue, oldTarget &#125;</span><br><span class="line">    : <span class="literal">undefined</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 收集完成，进行数组扁平化和包装为一个 Dep 进行触发</span></span><br><span class="line">  <span class="keyword">if</span> (deps.<span class="property">length</span> === <span class="number">1</span>) &#123; </span><br><span class="line">    <span class="keyword">if</span> (deps[<span class="number">0</span>]) &#123;</span><br><span class="line">      <span class="title function_">triggerEffects</span>(deps[<span class="number">0</span>])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">    <span class="keyword">const</span> <span class="attr">effects</span>: <span class="title class_">ReactiveEffect</span>[] = []</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> dep <span class="keyword">of</span> deps) &#123;</span><br><span class="line">      <span class="keyword">if</span> (dep) &#123;</span><br><span class="line">        effects.<span class="title function_">push</span>(...dep)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="title function_">triggerEffects</span>(<span class="title function_">createDep</span>(effects))</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 触发多个 effect 时的顺序：先触发computed的，再触发 watch 和 render 的</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">triggerEffects</span>(<span class="params"> dep: Dep | ReactiveEffect[] </span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> effects = <span class="title function_">isArray</span>(dep) ? dep : [...dep]</span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> effect <span class="keyword">of</span> effects) &#123;</span><br><span class="line">    <span class="keyword">if</span> (effect.<span class="property">computed</span>) &#123; </span><br><span class="line">      <span class="title function_">triggerEffect</span>(effect, debuggerEventExtraInfo)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> effect <span class="keyword">of</span> effects) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!effect.<span class="property">computed</span>) &#123;</span><br><span class="line">      <span class="title function_">triggerEffect</span>(effect, debuggerEventExtraInfo)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 触发单个 effect 的方式：有 scheduler 就 scheduler，没有就执行 fn</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">triggerEffect</span>(<span class="params"> effect: ReactiveEffect </span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (effect !== activeEffect || effect.<span class="property">allowRecurse</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (effect.<span class="property">scheduler</span>) &#123; effect.<span class="title function_">scheduler</span>() &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123; effect.<span class="title function_">run</span>() &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8Beffect%E5%92%8CDep%E7%9A%84%E7%BB%93%E6%9E%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yi1wen's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8Beffect%E5%92%8CDep%E7%9A%84%E7%BB%93%E6%9E%84/" itemprop="url">Vue3源码：响应式原理之effect和Dep的结构</a></h1>
         
 
         <div class="post-meta">
@@ -361,7 +498,7 @@
 <h3 id="effect结构"><a href="#effect结构" class="headerlink" title="effect结构"></a>effect结构</h3>
           <!--noindex-->
           <div class="post-button text-center">
-            <a class="btn" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86/#more" rel="contents">
+            <a class="btn" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8Beffect%E5%92%8CDep%E7%9A%84%E7%BB%93%E6%9E%84/#more" rel="contents">
               Read the rest here &raquo;
             </a>
           </div>
@@ -1254,7 +1391,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">6</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
