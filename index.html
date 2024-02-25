@@ -80,9 +80,9 @@
 
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="yi1wen&#39;s blog">
+<meta property="og:title" content="义依雯的博客">
 <meta property="og:url" content="http://yi1wen.github.io/index.html">
-<meta property="og:site_name" content="yi1wen&#39;s blog">
+<meta property="og:site_name" content="义依雯的博客">
 <meta property="og:locale">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
@@ -121,7 +121,7 @@
 
 
 
-  <title>yi1wen's blog</title>
+  <title>义依雯的博客</title>
   
 
 
@@ -152,7 +152,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">yi1wen's blog</span>
+        <span class="site-title">义依雯的博客</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -258,7 +258,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -342,7 +342,17 @@
       
         
           
-            
+            <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定</p>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>| 排序算法 | 稳定度 | 时间复杂度 | 额外空间 | 适用情况 |<br>| 冒泡排序 | 稳定 | O(n2) | O(1) | n小 |<br>| 快速排序 | 不稳定 | O(nlogn) ~ O(n2) | O(nlogn) | n大<br>| 归并排序 | 稳定 | O(nlog) | O(1) | n大 |</p>
+<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>一循环一个，循环中两两对比，交换位置，大的下沉，小的“冒泡”</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bubbleSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; len - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;        <span class="comment">// 相邻元素两两对比</span></span><br><span class="line">                <span class="keyword">var</span> temp = arr[j+<span class="number">1</span>];        <span class="comment">// 元素交换</span></span><br><span class="line">                arr[j+<span class="number">1</span>] = arr[j];</span><br><span class="line">                arr[j] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>挖坑 + 分治<br>基准值，小值区和大值区的分界线，分区，递归再排序</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">partition</span>(<span class="params">arr, low, high</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> pivot = arr[low];</span><br><span class="line">  <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">    <span class="keyword">while</span> (low &lt; high &amp;&amp; arr[high] &gt; pivot) &#123;</span><br><span class="line">      --high;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[low] = arr[high];</span><br><span class="line">    <span class="keyword">while</span> (low &lt; high &amp;&amp; arr[low] &lt;= pivot) &#123;</span><br><span class="line">      ++low;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[high] = arr[low];</span><br><span class="line">  &#125;</span><br><span class="line">  arr[low] = pivot;</span><br><span class="line">  <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">quickSort</span>(<span class="params">arr, low, high</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (low &lt; high) &#123;</span><br><span class="line">    <span class="keyword">let</span> pivot = <span class="title function_">partition</span>(arr, low, high);</span><br><span class="line">    <span class="title function_">quickSort</span>(arr, low, pivot - <span class="number">1</span>);</span><br><span class="line">    <span class="title function_">quickSort</span>(arr, pivot + <span class="number">1</span>, high);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>两两排序合并成一个，合并后成为一个，再和其他两两排序合并</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mergeTwoNums</span>(<span class="params">arr1, arr2</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> result = []</span><br><span class="line">  <span class="keyword">while</span>(arr1.<span class="property">length</span> &amp;&amp; arr2.<span class="property">length</span> )&#123;</span><br><span class="line">    <span class="keyword">if</span>(arr1[<span class="number">0</span>] &lt;= arr2[<span class="number">0</span>]) &#123;</span><br><span class="line">      result.<span class="title function_">push</span>(arr1.<span class="title function_">shift</span>())</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.<span class="title function_">push</span>(arr2.<span class="title function_">shift</span>())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (arr1.<span class="property">length</span>) &#123;</span><br><span class="line">    result.<span class="title function_">push</span>(arr1.<span class="title function_">shift</span>())</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(arr2.<span class="property">length</span>) &#123;</span><br><span class="line">    result.<span class="title function_">push</span>(arr2.<span class="title function_">shift</span>())</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">merge</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> len = arr.<span class="property">length</span></span><br><span class="line">  <span class="keyword">if</span>(len &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> middle = <span class="title class_">Math</span>.<span class="title function_">floor</span>(len / <span class="number">2</span>)</span><br><span class="line">    left = arr.<span class="title function_">slice</span>(<span class="number">0</span>, middle)</span><br><span class="line">    right = arr.<span class="title function_">slice</span>(middle)</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">merge</span>(<span class="title function_">mergeTwoNums</span>(left), <span class="title function_">mergeTwoNums</span>(right))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
           
         
       
@@ -399,7 +409,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -566,7 +576,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -729,7 +739,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -887,7 +897,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -1047,7 +1057,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -1209,7 +1219,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
@@ -1370,7 +1380,7 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="yi1wen's blog">
+      <meta itemprop="name" content="义依雯的博客">
     </span>
 
     
