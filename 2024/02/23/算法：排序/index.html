@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="排序稳定性稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定 算法| 排序算法 | 稳定度 | 时间复杂度 | 额外空间 | 适用情况 || 冒泡排序 | 稳定 | O(n2) | O(1) | n小 || 快速排序 | 不稳定 | O(nlogn) ~ O(n2) | O(nlogn) | n大 || 归并排序 | 稳定 | O(nlog) |">
+<meta name="description" content="排序稳定性稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定 算法   排序算法 稳定度 时间复杂度 额外空间 适用情况    冒泡排序 稳定 O(n2) O(1) n小   快速排序 不稳定 O(nlogn) ~ O(n2) O(nlogn) n大   归并排序 稳定 O(nlog) O(1) n大">
 <meta property="og:type" content="article">
 <meta property="og:title" content="算法：排序">
 <meta property="og:url" content="http://yi1wen.github.io/2024/02/23/%E7%AE%97%E6%B3%95%EF%BC%9A%E6%8E%92%E5%BA%8F/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="排序稳定性稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定 算法| 排序算法 | 稳定度 | 时间复杂度 | 额外空间 | 适用情况 || 冒泡排序 | 稳定 | O(n2) | O(1) | n小 || 快速排序 | 不稳定 | O(nlogn) ~ O(n2) | O(nlogn) | n大 || 归并排序 | 稳定 | O(nlog) |">
+<meta property="og:description" content="排序稳定性稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定 算法   排序算法 稳定度 时间复杂度 额外空间 适用情况    冒泡排序 稳定 O(n2) O(1) n小   快速排序 不稳定 O(nlogn) ~ O(n2) O(nlogn) n大   归并排序 稳定 O(nlog) O(1) n大">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-23T08:12:47.000Z">
-<meta property="article:modified_time" content="2024-02-25T06:35:26.000Z">
+<meta property="article:modified_time" content="2024-02-25T14:49:56.000Z">
 <meta property="article:author" content="义依雯">
 <meta property="article:tag" content="算法">
 <meta name="twitter:card" content="summary">
@@ -343,7 +343,40 @@
 
       
         <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定</p>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>| 排序算法 | 稳定度 | 时间复杂度 | 额外空间 | 适用情况 |<br>| 冒泡排序 | 稳定 | O(n2) | O(1) | n小 |<br>| 快速排序 | 不稳定 | O(nlogn) ~ O(n2) | O(nlogn) | n大 |<br>| 归并排序 | 稳定 | O(nlog) | O(1) | n大 |</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th>稳定度</th>
+<th>时间复杂度</th>
+<th>额外空间</th>
+<th>适用情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>冒泡排序</td>
+<td>稳定</td>
+<td>O(n2)</td>
+<td>O(1)</td>
+<td>n小</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>不稳定</td>
+<td>O(nlogn) ~ O(n2)</td>
+<td>O(nlogn)</td>
+<td>n大</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td>稳定</td>
+<td>O(nlog)</td>
+<td>O(1)</td>
+<td>n大</td>
+</tr>
+</tbody></table>
+<span id="more"></span>
+
 <h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>一循环一个，循环中两两对比，交换位置，大的下沉，小的“冒泡”</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bubbleSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; len - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;        <span class="comment">// 相邻元素两两对比</span></span><br><span class="line">                <span class="keyword">var</span> temp = arr[j+<span class="number">1</span>];        <span class="comment">// 元素交换</span></span><br><span class="line">                arr[j+<span class="number">1</span>] = arr[j];</span><br><span class="line">                arr[j] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -471,7 +504,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

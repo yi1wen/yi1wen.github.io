@@ -249,6 +249,328 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/" itemprop="url">Vue3源码：ref</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-21T11:16:09+08:00">
+                2024-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
+                    <span itemprop="name">源码</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue3</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>reactive 用于对象的响应式方案，<br>ref 用于 原始值的响应式方案，<br>原因有2：原始值的赋值为原始值，对象的赋值为内存地址，也就导致原始值的形参和实参之间无引用关系，完全独立；Proxy无法对原始值代理</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ref</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = &#123;</span><br><span class="line">    <span class="attr">value</span>: val</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(wrapper, <span class="string">&#x27;_v_isRef&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">reactive</span>(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ref 的实质是，用对象上的 value 属性代理原始值，再将该对象用 reactive Proxy代理</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/#more" rel="contents">
+              Read the rest here &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/" itemprop="url">Vue3源码：KeepAlive</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-21T10:26:31+08:00">
+                2024-02-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
+                    <span itemprop="name">源码</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
+                    <span itemprop="name">Vue3</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  KeepAlive 就是创建一个 KeepAlive 组件，插槽为需要 keepalive 的组件。</p>
+<ol>
+<li><strong>在 KeepAlive 组件中主要做</strong>：创建一个不渲染的 div 隐藏容器，用来将组件所渲染的内容移动进去隐藏；创建失活和激活的函数；缓存 cache (Map 结构的对象)：key：vnode.type, value: vnode</li>
+<li><strong>在需要 keepalive 的组件上</strong>：添加 keptAlive 标志，patch 时根据此标志调用激活函数； 添加 shouldKeepAlive 标志，unmount 中根据此标志调用失活函数；添加 keepAliveInstance 为对应的 KeepAlive 组件，以便找到失活激活函数</li>
+<li>缓存使用最新一次访问算法</li>
+</ol>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/#more" rel="contents">
+              Read the rest here &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/17/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Awatch/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -615,7 +937,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

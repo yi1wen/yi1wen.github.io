@@ -249,6 +249,249 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="url">原型和原型链</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T12:09:16+08:00">
+                2024-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>每一个实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性；<br>每一个构造函数（包括 <code>Object</code> 函数）都是是 <code>Function</code> 函数的实例函数，所以每个构造函数上有 <code>__proto__</code> 属性，指向 <code>Function</code> 函数的 <code>prototype</code> 属性；<br>每一个 <code>prototype</code> 属性默认是一个空对象，是 <code>Object</code> 函数的实例函数，所以 <code>prototype</code> 属性上有 <code>__proto__</code> 属性，指向 <code>Object</code> 函数的 <code>prototype</code> 属性；<br><code>Object</code> 的 <code>prototype</code> 属性的 <code>__proto__</code> 属性指向 <code>null</code> 是原型链的终点。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/" itemprop="url">浅拷贝与深拷贝</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T11:49:28+08:00">
+                2024-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>对于引用类型数据来说，赋值是复制引用类型数据的堆内存地址</p>
+<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>对于引用类型数据来说，浅拷贝是创建一个新的对象，对第一层属性进行拷贝，若有深层的引用类型数据，则还是指向同一内存地址，如 拓展运算符，slice，concat，assign</p>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>对于引用类型数据来说，深拷贝就是让两个引用类型数据完全独立，递归进行浅拷贝，深层的引用类型数据也指向不同内存地址，但是属性进行精确拷贝，如 _.cloneDeep, jQuery.extend, JSON.stringify（会忽略 undefined, symbol, function）</p>
+<h3 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep</span> (obj, hash = <span class="keyword">new</span> <span class="title class_">WeekMap</span>()) &#123;</span><br><span class="line">  <span class="keyword">if</span>(obj == <span class="literal">null</span>) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">RegExp</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RegExp</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Date</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Date</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Function</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Function</span> (<span class="string">&#x27;return&#x27;</span> + obj.<span class="title function_">toString</span>())()</span><br><span class="line">  <span class="keyword">if</span>(!(<span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span>)) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(hash.<span class="title function_">get</span>(obj)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(obj)</span><br><span class="line">  <span class="keyword">let</span> cloneObj = <span class="keyword">new</span> obj.<span class="title function_">constructor</span>(<span class="params"></span>)</span><br><span class="line">  hash.<span class="title function_">set</span>(obj,cloneObj)</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">      cloneObj[key] = <span class="title function_">cloneDeep</span>(obj[key],hash)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cloneObj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -874,19 +1117,46 @@
 
       
         
-          
-            <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定</p>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><p>| 排序算法 | 稳定度 | 时间复杂度 | 额外空间 | 适用情况 |<br>| 冒泡排序 | 稳定 | O(n2) | O(1) | n小 |<br>| 快速排序 | 不稳定 | O(nlogn) ~ O(n2) | O(nlogn) | n大 |<br>| 归并排序 | 稳定 | O(nlog) | O(1) | n大 |</p>
-<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><p>一循环一个，循环中两两对比，交换位置，大的下沉，小的“冒泡”</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">bubbleSort</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">    <span class="keyword">var</span> len = arr.<span class="property">length</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; len - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> j = <span class="number">0</span>; j &lt; len - <span class="number">1</span> - i; j++) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arr[j] &gt; arr[j+<span class="number">1</span>]) &#123;        <span class="comment">// 相邻元素两两对比</span></span><br><span class="line">                <span class="keyword">var</span> temp = arr[j+<span class="number">1</span>];        <span class="comment">// 元素交换</span></span><br><span class="line">                arr[j+<span class="number">1</span>] = arr[j];</span><br><span class="line">                arr[j] = temp;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h2><p>挖坑 + 分治<br>基准值，小值区和大值区的分界线，分区，递归再排序</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">partition</span>(<span class="params">arr, low, high</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> pivot = arr[low];</span><br><span class="line">  <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">    <span class="keyword">while</span> (low &lt; high &amp;&amp; arr[high] &gt; pivot) &#123;</span><br><span class="line">      --high;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[low] = arr[high];</span><br><span class="line">    <span class="keyword">while</span> (low &lt; high &amp;&amp; arr[low] &lt;= pivot) &#123;</span><br><span class="line">      ++low;</span><br><span class="line">    &#125;</span><br><span class="line">    arr[high] = arr[low];</span><br><span class="line">  &#125;</span><br><span class="line">  arr[low] = pivot;</span><br><span class="line">  <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">quickSort</span>(<span class="params">arr, low, high</span>) &#123;</span><br><span class="line">  <span class="keyword">if</span> (low &lt; high) &#123;</span><br><span class="line">    <span class="keyword">let</span> pivot = <span class="title function_">partition</span>(arr, low, high);</span><br><span class="line">    <span class="title function_">quickSort</span>(arr, low, pivot - <span class="number">1</span>);</span><br><span class="line">    <span class="title function_">quickSort</span>(arr, pivot + <span class="number">1</span>, high);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> arr;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<h2 id="归并排序"><a href="#归并排序" class="headerlink" title="归并排序"></a>归并排序</h2><p>两两排序合并成一个，合并后成为一个，再和其他两两排序合并</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">mergeTwoNums</span>(<span class="params">arr1, arr2</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> result = []</span><br><span class="line">  <span class="keyword">while</span>(arr1.<span class="property">length</span> &amp;&amp; arr2.<span class="property">length</span> )&#123;</span><br><span class="line">    <span class="keyword">if</span>(arr1[<span class="number">0</span>] &lt;= arr2[<span class="number">0</span>]) &#123;</span><br><span class="line">      result.<span class="title function_">push</span>(arr1.<span class="title function_">shift</span>())</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.<span class="title function_">push</span>(arr2.<span class="title function_">shift</span>())</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span> (arr1.<span class="property">length</span>) &#123;</span><br><span class="line">    result.<span class="title function_">push</span>(arr1.<span class="title function_">shift</span>())</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">while</span>(arr2.<span class="property">length</span>) &#123;</span><br><span class="line">    result.<span class="title function_">push</span>(arr2.<span class="title function_">shift</span>())</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">merge</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> len = arr.<span class="property">length</span></span><br><span class="line">  <span class="keyword">if</span>(len &lt; <span class="number">2</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> arr</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> middle = <span class="title class_">Math</span>.<span class="title function_">floor</span>(len / <span class="number">2</span>)</span><br><span class="line">    left = arr.<span class="title function_">slice</span>(<span class="number">0</span>, middle)</span><br><span class="line">    right = arr.<span class="title function_">slice</span>(middle)</span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">merge</span>(<span class="title function_">mergeTwoNums</span>(left), <span class="title function_">mergeTwoNums</span>(right))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
+          <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定</p>
+<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><table>
+<thead>
+<tr>
+<th>排序算法</th>
+<th>稳定度</th>
+<th>时间复杂度</th>
+<th>额外空间</th>
+<th>适用情况</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>冒泡排序</td>
+<td>稳定</td>
+<td>O(n2)</td>
+<td>O(1)</td>
+<td>n小</td>
+</tr>
+<tr>
+<td>快速排序</td>
+<td>不稳定</td>
+<td>O(nlogn) ~ O(n2)</td>
+<td>O(nlogn)</td>
+<td>n大</td>
+</tr>
+<tr>
+<td>归并排序</td>
+<td>稳定</td>
+<td>O(nlog)</td>
+<td>O(1)</td>
+<td>n大</td>
+</tr>
+</tbody></table>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2024/02/23/%E7%AE%97%E6%B3%95%EF%BC%9A%E6%8E%92%E5%BA%8F/#more" rel="contents">
+              Read the rest here &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1408,328 +1678,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/" itemprop="url">Vue3源码：ref</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-21T11:16:09+08:00">
-                2024-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>reactive 用于对象的响应式方案，<br>ref 用于 原始值的响应式方案，<br>原因有2：原始值的赋值为原始值，对象的赋值为内存地址，也就导致原始值的形参和实参之间无引用关系，完全独立；Proxy无法对原始值代理</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ref</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = &#123;</span><br><span class="line">    <span class="attr">value</span>: val</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(wrapper, <span class="string">&#x27;_v_isRef&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">reactive</span>(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ref 的实质是，用对象上的 value 属性代理原始值，再将该对象用 reactive Proxy代理</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/" itemprop="url">Vue3源码：KeepAlive</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-21T10:26:31+08:00">
-                2024-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  KeepAlive 就是创建一个 KeepAlive 组件，插槽为需要 keepalive 的组件。</p>
-<ol>
-<li><strong>在 KeepAlive 组件中主要做</strong>：创建一个不渲染的 div 隐藏容器，用来将组件所渲染的内容移动进去隐藏；创建失活和激活的函数；缓存 cache (Map 结构的对象)：key：vnode.type, value: vnode</li>
-<li><strong>在需要 keepalive 的组件上</strong>：添加 keptAlive 标志，patch 时根据此标志调用激活函数； 添加 shouldKeepAlive 标志，unmount 中根据此标志调用失活函数；添加 keepAliveInstance 为对应的 KeepAlive 组件，以便找到失活激活函数</li>
-<li>缓存使用最新一次访问算法</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1780,7 +1728,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-count">14</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
