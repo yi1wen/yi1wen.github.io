@@ -249,6 +249,132 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/28/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/28/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/" itemprop="url">前端模块化</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-28T12:20:16+08:00">
+                2024-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决了什么问题：命名冲突，依赖管理</p>
+<ol>
+<li>Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认</li>
+<li>ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认</li>
+<li>AMD：异步形式加载，回调适用defined</li>
+<li>UMD：结合 Commonjs 和 AMD</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/27/Http%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%92%8C%E5%93%8D%E5%BA%94%E5%A4%B4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -453,16 +579,20 @@
         
           
             <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>template 单根节点和多根节点</li>
-<li>API：选项式和组合式</li>
+<li>template 单根节点和多根节点 Fragment</li>
+<li>API：选项式和同一逻辑组合式</li>
 <li>响应式：defineProperty 和 Proxy</li>
 <li>Diff 算法优化</li>
-<li>打包优化：Tree-shaking</li>
+<li>打包优化：Tree-shaking，按需引入 API，Vue2 全局 API 暴露在 Vue实例上</li>
 <li>异步组件 Suspense</li>
-<li>可定位组件 Teleport</li>
+<li>可移动组件 Teleport</li>
 <li>TypeScript</li>
-<li>事件缓存，静态节点提升，动态节点收集</li>
+<li>事件缓存，</li>
+<li>虚拟Dom：PatchFlags，静态节点提升，预字符串化；动态节点收集，靶向更新</li>
 </ol>
+<h3 id="Object-defineProperty-和-Proxy"><a href="#Object-defineProperty-和-Proxy" class="headerlink" title="Object.defineProperty 和 Proxy"></a>Object.defineProperty 和 Proxy</h3><h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><p>只有 get 和 set，嵌套需要递归遍历，检测不到添加和删除，数组无法监听</p>
+<p><strong>Vue2怎么实现监听数组的</strong>：<br>不用 defineProperty，而是重写 数组的原型方法进行覆盖变异</p>
+<h4 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h4><p>对象层面，多种拦截方法，支持数组</p>
 
           
         
@@ -603,7 +733,7 @@
 <h2 id="1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程"><a href="#1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程" class="headerlink" title="1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程"></a>1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程</h2><h2 id="2-发起请求，查询缓存（协商缓存，强缓存）"><a href="#2-发起请求，查询缓存（协商缓存，强缓存）" class="headerlink" title="2. 发起请求，查询缓存（协商缓存，强缓存）"></a>2. 发起请求，查询缓存（协商缓存，强缓存）</h2><h3 id="强缓存：直接使用本地缓存支援，关心是否在有效期内"><a href="#强缓存：直接使用本地缓存支援，关心是否在有效期内" class="headerlink" title="强缓存：直接使用本地缓存支援，关心是否在有效期内"></a><strong>强缓存</strong>：直接使用本地缓存支援，关心<strong>是否在有效期内</strong></h3><p>从本地缓存中查找也是需要发起请求，如果命中缓存则返回 200状态码和资源</p>
 <h4 id="缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache"><a href="#缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache" class="headerlink" title="缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache"></a>缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache</h4><ul>
 <li><em>Serviec Worker</em>：独立线程</li>
-<li><em>Memory Cache</em>：内存缓存（短期），忽略缓存控制头，直接读取，若禁止缓存则需要 <code>Cache-Control: no-store</code>。缓存资源有：通过 preloader 加载的资源（preloader 和 prefetch）并行预加载；preload 指令标记的资源。</li>
+<li><em>Memory Cache</em>：内存缓存（短期），忽略缓存控制头，直接读取，若禁止缓存则需要 <code>Cache-Control: no-store</code>。缓存资源有：通过 preloader 加载的资源并行预加载；preload 指令标记的资源。</li>
 <li><em>Disk Cache</em>：硬盘缓存（持久）</li>
 <li><em>Push Cache</em>：推送缓存，只在会话中存在</li>
 </ul>
@@ -1102,9 +1232,9 @@
             <h2 id="CSRF-跨站请求伪造"><a href="#CSRF-跨站请求伪造" class="headerlink" title="CSRF 跨站请求伪造"></a>CSRF 跨站请求伪造</h2><p>跨站：在被攻击网站上获得了 cookie，诱导进入第三方</p>
 <p>请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作</p>
 <p>类型：get，post，链接</p>
-<h2 id="XSS跨站脚本攻击"><a href="#XSS跨站脚本攻击" class="headerlink" title="XSS跨站脚本攻击"></a>XSS跨站脚本攻击</h2><ul>
+<h2 id="XSS-跨站脚本攻击"><a href="#XSS-跨站脚本攻击" class="headerlink" title="XSS 跨站脚本攻击"></a>XSS 跨站脚本攻击</h2><ul>
 <li>存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行</li>
-<li>反射型： 恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回，</li>
+<li>反射型：恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回，</li>
 <li>Dom 型：url 前端执行</li>
 </ul>
 <p>预防：防止攻击者提交恶意代码</p>
@@ -1432,184 +1562,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/23/%E7%AE%97%E6%B3%95%EF%BC%9A%E6%8E%92%E5%BA%8F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/23/%E7%AE%97%E6%B3%95%EF%BC%9A%E6%8E%92%E5%BA%8F/" itemprop="url">算法：排序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-23T16:12:47+08:00">
-                2024-02-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%AE%97%E6%B3%95/" itemprop="url" rel="index">
-                    <span itemprop="name">算法</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="排序"><a href="#排序" class="headerlink" title="排序"></a>排序</h2><h3 id="稳定性"><a href="#稳定性" class="headerlink" title="稳定性"></a>稳定性</h3><p>稳定性是如果有多个相同元素，经过排序，它们的位置是被控制的，就叫稳定；若它们的位置是随机的，就是不稳定</p>
-<h3 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h3><table>
-<thead>
-<tr>
-<th>排序算法</th>
-<th>稳定度</th>
-<th>时间复杂度</th>
-<th>额外空间</th>
-<th>适用情况</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>冒泡排序</td>
-<td>稳定</td>
-<td>O(n2)</td>
-<td>O(1)</td>
-<td>n小</td>
-</tr>
-<tr>
-<td>快速排序</td>
-<td>不稳定</td>
-<td>O(nlogn) ~ O(n2)</td>
-<td>O(nlogn)</td>
-<td>n大</td>
-</tr>
-<tr>
-<td>归并排序</td>
-<td>稳定</td>
-<td>O(nlog)</td>
-<td>O(1)</td>
-<td>n大</td>
-</tr>
-</tbody></table>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/23/%E7%AE%97%E6%B3%95%EF%BC%9A%E6%8E%92%E5%BA%8F/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1660,7 +1612,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-count">18</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
