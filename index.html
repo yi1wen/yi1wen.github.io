@@ -249,6 +249,1071 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/03/14/Buffer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/14/Buffer/" itemprop="url">Buffer</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-14T09:15:52+08:00">
+                2024-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Buffer 对象是二进制数据，使用 Buffer 可以减少转换的性能损耗，直接传输，将静态内容预先转换为 Buffer 可以提升性能</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/03/14/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/14/%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F/" itemprop="url">内存泄漏</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-14T09:13:48+08:00">
+                2024-03-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="内存泄露"><a href="#内存泄露" class="headerlink" title="内存泄露"></a>内存泄露</h2><p>占着内存但没有用</p>
+<h3 id="容易出现的场景"><a href="#容易出现的场景" class="headerlink" title="容易出现的场景"></a>容易出现的场景</h3><ol>
+<li>意外的全局变量</li>
+<li>闭包，定时器回调引用外部的变量</li>
+<li>缓存未释放：尤其是dom元素的缓存，移除dom元素后还存在于内存中；用对象做缓存；模块机制的缓存；队列的出不敷入（队列拥塞）</li>
+<li>缓存重复：进程间不能共享缓存造成缓存重复</li>
+</ol>
+<h3 id="如何解决"><a href="#如何解决" class="headerlink" title="如何解决"></a>如何解决</h3><ol>
+<li>手动赋值 null 释放，delete 释放</li>
+<li>停止定时器</li>
+<li>适当使用 weakmap，weakset</li>
+<li>use strict 解决意外全局变量</li>
+<li>Performance 记录快照,监测有无内存泄露</li>
+<li>避免缓存过多：限制对象键值，LRU 算法，清空队列方法（监控长度）；</li>
+<li>避免缓存重复：进程外缓存，可跨进程共享、</li>
+<li>对于队列：异步调用的超时模式，拥塞时的拒绝模式</li>
+</ol>
+<h2 id="内存溢出"><a href="#内存溢出" class="headerlink" title="内存溢出"></a>内存溢出</h2><p>需要内存但没有</p>
+<h2 id="查看内存的方法"><a href="#查看内存的方法" class="headerlink" title="查看内存的方法"></a>查看内存的方法</h2><ul>
+<li>process.memoryUsage</li>
+<li>os.totalmem</li>
+<li>os.freemem</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/03/09/%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/09/%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/" itemprop="url">本地存储</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-09T19:04:21+08:00">
+                2024-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>localStorage</li>
+<li>sessionStorage</li>
+<li>indexedDB</li>
+</ol>
+<h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a>sessionStorage</h3><ol>
+<li>刷新 sessionStorage 仍然存在</li>
+<li>从一个页面打开一个新页面，新页面会复制（深拷贝）上一个页面的 sessionStorage</li>
+<li>打开相同 URL 的不同窗口页面，会创建各自的 sessionStorage</li>
+</ol>
+<h3 id="indexedDB"><a href="#indexedDB" class="headerlink" title="indexedDB"></a>indexedDB</h3><p>异步存储</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/03/09/TCP/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/09/TCP/" itemprop="url">TCP</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-09T18:35:39+08:00">
+                2024-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="1-TCP-长连接、心跳机制、轮询"><a href="#1-TCP-长连接、心跳机制、轮询" class="headerlink" title="1. TCP 长连接、心跳机制、轮询"></a>1. TCP 长连接、心跳机制、轮询</h2><p>TCP 长连接：保持连接，直到显式关闭连接或发生连接中断<br>心跳机制：因为长连接保持连接，所以可以用心跳机制，一在连接空闲时发送数据，防止超时关闭连接；二作为探测消息，检测连接状态<br>轮询：查询是否有新数据，关心是否有新数据，存在延迟和带宽浪费，心跳机制更轻量</p>
+<h2 id="2-TCP-长连接与-Websocket"><a href="#2-TCP-长连接与-Websocket" class="headerlink" title="2. TCP 长连接与 Websocket"></a>2. TCP 长连接与 Websocket</h2><ul>
+<li>TCP 是半双工通信，双方交替发送和接受数据；Websocket 全双工同行，同时发送和接受数据</li>
+<li>Websocket 适用于对实时性要求高的场景，实时双向通信；如果只是保持连接，不需要双向的话，TCP 长连接更适用</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/03/09/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/03/09/%E5%8A%A0%E5%AF%86%E7%AE%97%E6%B3%95/" itemprop="url">加密算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-03-09T13:08:44+08:00">
+                2024-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>对称加密：DES，3DES，AES；使用同一密钥进行加密解密，不好管理密钥，对敏感信息进行加密</li>
+<li>非对称加密：RSA，DSA，ECC；使用公钥和私钥进行加密解密，只需要保证私钥的私密</li>
+<li>散列算法：MD5，SHA-1，HMAC；保证信息完整性</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/29/%E7%8A%B6%E6%80%81%E7%A0%81/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/29/%E7%8A%B6%E6%80%81%E7%A0%81/" itemprop="url">状态码</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-29T18:19:37+08:00">
+                2024-02-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h3><p>304 协商缓存</p>
+<h3 id="重定向"><a href="#重定向" class="headerlink" title="重定向"></a>重定向</h3><ul>
+<li>301，308 永久重定向</li>
+<li>302，307 临时重定向</li>
+</ul>
+<h3 id="请求成功"><a href="#请求成功" class="headerlink" title="请求成功"></a>请求成功</h3><ul>
+<li>200 请求成功：除了从服务器处可以获得，查询缓存如果命中也会返回200</li>
+<li>204 请求成功，但客户端客户不需要离开当前页面，并不是内容为空，浏览器在收到204状态码后，应该继续发送后续请求以获取资源的实际内容。：使用惯例是，在 PUT 请求中进行资源更新，但是不需要改变当前展示给用户的页面，那么返回 204 No Content。如果创建了资源，则返回 201 Created 。如果应将页面更改为新更新的页面，则应改用 200 。</li>
+<li>206 请求一部分资源，成功返回一范围资源：Content-Range</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/29/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/" itemprop="url">垃圾回收机制</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-29T17:37:00+08:00">
+                2024-02-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>标记清除</li>
+<li>标记整理</li>
+<li>引用计数</li>
+<li>分代式</li>
+<li>全停顿</li>
+</ol>
+<ul>
+<li>如何处理垃圾回收后内存碎片化：标记整理（将存活对象集中到一端，编辑之外的区域清除）</li>
+</ul>
+<h3 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h3><p>将每个变量都打上清除标记，若存在于上下文当中的变量，则去除清除标记，最后将剩下拥有清除标记的变量回收释放内存，需要随票</p>
+<h3 id="标记整理"><a href="#标记整理" class="headerlink" title="标记整理"></a>标记整理</h3><p>将活着的内存向一端移动，覆盖死内存位置，移动后直接清理掉边界外的内存</p>
+<h3 id="引用计数"><a href="#引用计数" class="headerlink" title="引用计数"></a>引用计数</h3><p>变量被引用的次数，我被引用的次数加一，若次数为零，则释放变量，回收内存</p>
+<h3 id="分代式"><a href="#分代式" class="headerlink" title="分代式"></a>分代式</h3><ul>
+<li>新生代：新生代是生命周期短，新创建的变量，新生代垃圾回收频率高，用高效的垃圾回收算法</li>
+</ul>
+<p><strong>Scavenge算法</strong>：复制活着的对象 + 分空间。新生代空间分为 From 空间（正使用空间）和 To 空间（闲置空间），将存活对象复制从 From 到 To，复制前检查能否晋升到老生代<br><strong>对象晋升条件</strong>：是否已经经历过 Scavenge 算法；To 空间占比超过 25%</p>
+<ul>
+<li>老生代，老生代是生命周期长，持久存在的变量，老生代垃圾回收频率低，用成熟稳定的垃圾回收算法</li>
+</ul>
+<p>不再适用 Scavenge 算法，存活多，分区浪费空间，老生代用<strong>标记清除</strong></p>
+<h3 id="全停顿"><a href="#全停顿" class="headerlink" title="全停顿"></a>全停顿</h3><p>垃圾清除需要的时间，暂停应用逻辑<br>改进方法：增量标记、整理：垃圾回收与应用逻辑交替执行</p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><h3 id="Js获取dom元素时耗长"><a href="#Js获取dom元素时耗长" class="headerlink" title="Js获取dom元素时耗长"></a>Js获取dom元素时耗长</h3><p>因为涉及到两个线程之间的通信：js是用的js引擎线程，dom元素是处于GUI渲染线程</p>
+<h3 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h3><p>嵌套的函数，内部函数引用外部函数的变量，具有私有变量，延长变量的生命周期</p>
+<p>场景：</p>
+<ol>
+<li>柯里化函数：函数分布传递参数，将接受多个参数的函数变化为接受一个参数的函数，并返回接受余下参数的函数</li>
+<li>高阶函数：函数可以作为参数或是返回值</li>
+<li>设计模式：单例模式</li>
+<li>防抖</li>
+</ol>
+<p>优点：参数复用，提前返回，延迟计算</p>
+<h4 id="单例模式-闭包-立即执行"><a href="#单例模式-闭包-立即执行" class="headerlink" title="单例模式 &#x3D; 闭包 + 立即执行"></a>单例模式 &#x3D; 闭包 + 立即执行</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> oneInstance = (<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> instance= <span class="literal">null</span>;</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">function</span> (<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="keyword">if</span>(!instance) &#123;</span><br><span class="line">      instance = <span class="keyword">new</span> <span class="title class_">CreateOneINsatnce</span>(name)</span><br><span class="line">      <span class="keyword">return</span> instance</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)()</span><br></pre></td></tr></table></figure>
+
+<h3 id="线程之间的通信"><a href="#线程之间的通信" class="headerlink" title="线程之间的通信"></a>线程之间的通信</h3><ul>
+<li>onmessage()</li>
+<li>postMessage()</li>
+</ul>
+<h3 id="进程之间的通信"><a href="#进程之间的通信" class="headerlink" title="进程之间的通信"></a>进程之间的通信</h3><ul>
+<li>send()</li>
+<li>管道：用于，分为命名管道和匿名管道（父子进程）。内核在内存创建一个缓存区</li>
+<li>消息队列：存放在内存中的消息链表，消息就是用户自定义的数据结构</li>
+<li>共享内存：页表是将进程的逻辑地址映射到物理空间的表，共享内存就是将两个进程的逻辑地址通过页表映射到同一个物理空间</li>
+<li>信号：异步通信机制。发送信号来通知进程某个异步事件的发送，进程终端处理程序后，进程才恢复执行</li>
+<li>Socket 套接字：与不同主机上的进程通信</li>
+</ul>
+<h3 id="多进程与并发"><a href="#多进程与并发" class="headerlink" title="多进程与并发"></a>多进程与并发</h3><ul>
+<li>负载均衡 -&gt; 轮叫调度：CPU 和 I&#x2F;O 影响繁忙度，由主进程接收连接，分发给工作进程</li>
+<li>状态共享：第三方数据存储，改变数据，通知更新，状态同步的方式是轮询或主动通知（由一个通知进程进行轮询获得数据并更新）</li>
+</ul>
+<h3 id="WeakSet，WeakMap"><a href="#WeakSet，WeakMap" class="headerlink" title="WeakSet，WeakMap"></a>WeakSet，WeakMap</h3><p>WeakSet 和 WeakMap 都不会影响垃圾回收，都不能遍历<br>WeakMap 的 key 和 WeakSet 的值一定是引用类型的<br>WeakSet 没有 size 属性，WeakMap 没有 clear 清空方法</p>
+<p>Map 的 API : size,set,get,has,delete,clear<br>Set 的 API : add,delete,has,clear<br>遍历操作方法: keys(),values(),entries(),forEach()</p>
+<h3 id="Use-strict是怎么编译的"><a href="#Use-strict是怎么编译的" class="headerlink" title="Use strict是怎么编译的"></a>Use strict是怎么编译的</h3><h2 id="未解决：如何避免内存分配碎片化"><a href="#未解决：如何避免内存分配碎片化" class="headerlink" title="未解决：如何避免内存分配碎片化"></a>未解决：如何避免内存分配碎片化</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/28/Vue3%EF%BC%9A%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/28/Vue3%EF%BC%9A%E7%BB%84%E4%BB%B6%E9%80%9A%E8%AE%AF/" itemprop="url">Vue3：组件通讯</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-28T18:22:26+08:00">
+                2024-02-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>Props 和 emits</li>
+<li>expose 和 ref</li>
+<li>provide 和 inject</li>
+<li>事件总线 Bus</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/28/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -449,6 +1514,13 @@
             <h2 id="文件链接再浏览器中打开是预览还是下载"><a href="#文件链接再浏览器中打开是预览还是下载" class="headerlink" title="文件链接再浏览器中打开是预览还是下载"></a>文件链接再浏览器中打开是预览还是下载</h2><ul>
 <li>预览：<code>Content-type: application/pdf;Content-Disposition: inline</code><br>-下载：<code>Content-type: application/octet-stream</code> 二进制流直接下载、<code>Content-type: application/pdf ; Content-Disposition: attachment</code></li>
 </ul>
+<h2 id="Content-Type-type-类型-subtype-子类型"><a href="#Content-Type-type-类型-subtype-子类型" class="headerlink" title="Content-Type: type(类型)&#x2F;subtype(子类型)"></a>Content-Type: type(类型)&#x2F;subtype(子类型)</h2><ul>
+<li>type: application(二进制数据),model(三维模型数据),audio,font,image,video,text; 多部分类型 message,multipart</li>
+<li>application&#x2F;octet-stream 未知的二进制文件</li>
+<li>text&#x2F;plain 未知的文本文件：text&#x2F;css,text&#x2F;html,text&#x2F;javascript</li>
+<li>multipart&#x2F;form-data 用于 HTML 表单从浏览器发送信息给服务器。</li>
+<li>multipart&#x2F;byteranges 用于指出这个文件由若干部分组成，每一个都有其请求范围 206 + Content-Range</li>
+</ul>
 <h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><ul>
 <li>强缓存：<code>Empires</code>，<code>Cache-Control</code></li>
 <li>协商缓存：<code>Etag</code>，<code>Last-Modified</code></li>
@@ -459,1074 +1531,28 @@
 <h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><ul>
 <li><code>Cookie</code>,<code>set-Cookie</code></li>
 </ul>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/27/Vue2%E5%92%8CVue3%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/27/Vue2%E5%92%8CVue3%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">Vue2和Vue3的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-27T19:47:53+08:00">
-                2024-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>template 单根节点和多根节点 Fragment</li>
-<li>API：选项式和同一逻辑组合式</li>
-<li>响应式：defineProperty 和 Proxy</li>
-<li>Diff 算法优化</li>
-<li>打包优化：Tree-shaking，按需引入 API，Vue2 全局 API 暴露在 Vue实例上</li>
-<li>异步组件 Suspense</li>
-<li>可移动组件 Teleport</li>
-<li>TypeScript</li>
-<li>事件缓存，</li>
-<li>虚拟Dom：PatchFlags，静态节点提升，预字符串化；动态节点收集，靶向更新</li>
-</ol>
-<h3 id="Object-defineProperty-和-Proxy"><a href="#Object-defineProperty-和-Proxy" class="headerlink" title="Object.defineProperty 和 Proxy"></a>Object.defineProperty 和 Proxy</h3><h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><p>只有 get 和 set，嵌套需要递归遍历，检测不到添加和删除，数组无法监听</p>
-<p><strong>Vue2怎么实现监听数组的</strong>：<br>不用 defineProperty，而是重写 数组的原型方法进行覆盖变异</p>
-<h4 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h4><p>对象层面，多种拦截方法，支持数组</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/" itemprop="url">输入url到页面渲染</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T15:52:01+08:00">
-                2024-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>浏览器进程：检查</li>
-<li>网络进程：缓存</li>
-<li>dns</li>
-<li>请求</li>
-<li>三次握手</li>
-<li>重定向</li>
-<li>四次挥手</li>
-<li>渲染进程：提交文档；浏览器进程：更新页面</li>
-<li>渲染过程：html树-css树-render树-布局-绘制-合成-GPU</li>
-</ol>
-<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>GUI 和 js 互斥</p>
-<ul>
-<li>GUI 渲染线程</li>
-<li>js 引擎线程</li>
-<li>定时器 线程</li>
-<li>异步 http 请求线程：处理回调函数</li>
-<li>WebWorker 多线程</li>
+<h3 id="如何保证-Cookie-被安全发送"><a href="#如何保证-Cookie-被安全发送" class="headerlink" title="如何保证 Cookie 被安全发送"></a>如何保证 Cookie 被安全发送</h3><ul>
+<li>Secure 属性：通过 https 发送</li>
+<li>HttpOnly：无法使用 js 读取到 cookie，就无法恶意执行， 用于防范 XSS</li>
+<li>Domain：指定接受 Cookie 的主机</li>
+<li>Path：指定请求的路径</li>
+<li>SameSite：是否随跨站请求一起发送，防止 CSRF</li>
 </ul>
-<h2 id="1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程"><a href="#1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程" class="headerlink" title="1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程"></a>1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程</h2><h2 id="2-发起请求，查询缓存（协商缓存，强缓存）"><a href="#2-发起请求，查询缓存（协商缓存，强缓存）" class="headerlink" title="2. 发起请求，查询缓存（协商缓存，强缓存）"></a>2. 发起请求，查询缓存（协商缓存，强缓存）</h2><h3 id="强缓存：直接使用本地缓存支援，关心是否在有效期内"><a href="#强缓存：直接使用本地缓存支援，关心是否在有效期内" class="headerlink" title="强缓存：直接使用本地缓存支援，关心是否在有效期内"></a><strong>强缓存</strong>：直接使用本地缓存支援，关心<strong>是否在有效期内</strong></h3><p>从本地缓存中查找也是需要发起请求，如果命中缓存则返回 200状态码和资源</p>
-<h4 id="缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache"><a href="#缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache" class="headerlink" title="缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache"></a>缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache</h4><ul>
-<li><em>Serviec Worker</em>：独立线程</li>
-<li><em>Memory Cache</em>：内存缓存（短期），忽略缓存控制头，直接读取，若禁止缓存则需要 <code>Cache-Control: no-store</code>。缓存资源有：通过 preloader 加载的资源并行预加载；preload 指令标记的资源。</li>
-<li><em>Disk Cache</em>：硬盘缓存（持久）</li>
-<li><em>Push Cache</em>：推送缓存，只在会话中存在</li>
+<h3 id="Session-和-Cookie-的区别"><a href="#Session-和-Cookie-的区别" class="headerlink" title="Session 和 Cookie 的区别"></a>Session 和 Cookie 的区别</h3><ul>
+<li>Session 存储在服务端，Cookie 存储在客户端，都是存储用户信息的地方</li>
+<li>Http 是无状态协议， Session 用来弥补这个缺陷，每个用户有各自的 Session，存储状态信息，唯一标识为 sessionid，所以 Session 是用户状态与信息的内容</li>
+<li>使用 Cookie 机制来在每次 Http 请求的时候带上 sid，还可以自动登录，是一个存储用户状态与信息的容器</li>
 </ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="url">原型和原型链</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T12:09:16+08:00">
-                2024-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>每一个实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性；<br>每一个构造函数（包括 <code>Object</code> 函数）都是是 <code>Function</code> 函数的实例函数，所以每个构造函数上有 <code>__proto__</code> 属性，指向 <code>Function</code> 函数的 <code>prototype</code> 属性；<br>每一个 <code>prototype</code> 属性默认是一个空对象，是 <code>Object</code> 函数的实例函数，所以 <code>prototype</code> 属性上有 <code>__proto__</code> 属性，指向 <code>Object</code> 函数的 <code>prototype</code> 属性；<br><code>Object</code> 的 <code>prototype</code> 属性的 <code>__proto__</code> 属性指向 <code>null</code> 是原型链的终点。</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/" itemprop="url">浅拷贝与深拷贝</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T11:49:28+08:00">
-                2024-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>对于引用类型数据来说，赋值是复制引用类型数据的堆内存地址</p>
-<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>对于引用类型数据来说，浅拷贝是创建一个新的对象，对第一层属性进行拷贝，若有深层的引用类型数据，则还是指向同一内存地址，如 拓展运算符，slice，concat，assign</p>
-<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>对于引用类型数据来说，深拷贝就是让两个引用类型数据完全独立，递归进行浅拷贝，深层的引用类型数据也指向不同内存地址，但是属性进行精确拷贝，如 _.cloneDeep, jQuery.extend, JSON.stringify（会忽略 undefined, symbol, function）</p>
-<h3 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep</span> (obj, hash = <span class="keyword">new</span> <span class="title class_">WeekMap</span>()) &#123;</span><br><span class="line">  <span class="keyword">if</span>(obj == <span class="literal">null</span>) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">RegExp</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RegExp</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Date</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Date</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Function</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Function</span> (<span class="string">&#x27;return&#x27;</span> + obj.<span class="title function_">toString</span>())()</span><br><span class="line">  <span class="keyword">if</span>(!(<span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span>)) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(hash.<span class="title function_">get</span>(obj)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(obj)</span><br><span class="line">  <span class="keyword">let</span> cloneObj = <span class="keyword">new</span> obj.<span class="title function_">constructor</span>(<span class="params"></span>)</span><br><span class="line">  hash.<span class="title function_">set</span>(obj,cloneObj)</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">      cloneObj[key] = <span class="title function_">cloneDeep</span>(obj[key],hash)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cloneObj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/" itemprop="url">Vue3源码：reactive</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T17:11:47+08:00">
-                2024-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>reactive 就是根据不同的对象类型(rawType -&gt; TargetType)，使用不同的处理器 handler，不同处理器里有一一对应的操作方法，将对象进行 Proxy 代理，并记录到 reactiveMap 中，返回代理对象;<br>Proxy 对应拦截操作的核心 api 是 Refelct 对应的方法，使用 Reflect 的原因是 receiver 参数使触发对象劫持时保证正确的 this 指向</p>
-<h2 id="reactive-源码"><a href="#reactive-源码" class="headerlink" title="reactive 源码"></a>reactive 源码</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/" itemprop="url">前端攻击</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T17:00:51+08:00">
-                2024-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="CSRF-跨站请求伪造"><a href="#CSRF-跨站请求伪造" class="headerlink" title="CSRF 跨站请求伪造"></a>CSRF 跨站请求伪造</h2><p>跨站：在被攻击网站上获得了 cookie，诱导进入第三方</p>
-<p>请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作</p>
-<p>类型：get，post，链接</p>
-<h2 id="XSS-跨站脚本攻击"><a href="#XSS-跨站脚本攻击" class="headerlink" title="XSS 跨站脚本攻击"></a>XSS 跨站脚本攻击</h2><ul>
-<li>存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行</li>
-<li>反射型：恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回，</li>
-<li>Dom 型：url 前端执行</li>
+<h2 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h2><h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><ol>
+<li>GET,HEAD,POST(Content-Type: application&#x2F;x-www-form-urlencoded, multipart&#x2F;form-data, text&#x2F;plain, 也就是表单数据，未知文本文件)</li>
+<li>无自定义 HTTP 头部</li>
+</ol>
+<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><ul>
+<li>OPTIONS 请求允许通信选项：CORS 中的预检请求，以检测实际请求是否可以被服务器所接受</li>
+<li>请求原因：复杂请求，跨域，自定义请求头</li>
+<li>如何避免：1。使用代理避免跨域 2.简单请求 3.不自定义请求头</li>
 </ul>
-<p>预防：防止攻击者提交恶意代码</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Css/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/25/Css/" itemprop="url">CSS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T15:29:20+08:00">
-                2024-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h2><p>MDN：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex" title="flex">flex的解释</a></p>
-<ol>
-<li>flex-grow 当容器还有剩余空间放大的比例</li>
-<li>flex-shrink 当容器没有剩余空间缩小的比例</li>
-<li>flex-basis 默认大小，以上两个是通过此值来计算是否放大或缩小的</li>
-<li><strong>flex: [flex-grow] [flex-shrink] [flex-basis]</strong> 原始值：flex:0 1 auto</li>
-<li>flex-direction 主轴方向 row-行 col-列</li>
-<li>flex-wrap 指定单行显示还是多行显示</li>
-<li><strong>flex-flow: [flex-direction] [flex-wrap]</strong></li>
-</ol>
-<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><ol>
-<li>static 正常</li>
-<li>relative 原始位置用空白占位，对于原始位置的偏移</li>
-<li>absolute 移出正常文档流，对最近的非 static 的祖先元素的右上角点的定位</li>
-<li>fixed 移出正常文档流，对屏幕视口的定位，滚动时不会改变，当元素祖先的 transform、perspective、filter 或 backdrop-filter 属性非 none 时，容器由视口改为该祖先。</li>
-<li>sticky</li>
-</ol>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/%E8%B7%A8%E5%9F%9F/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/25/%E8%B7%A8%E5%9F%9F/" itemprop="url">跨域</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T14:43:00+08:00">
-                2024-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>浏览器同源策略：同协议，域名，端口的资源<br>限制：</p>
-<ol>
-<li>无法操作彼此的 DOM 元素</li>
-<li>无法共享缓存，如 cookie 和 localstorage</li>
-</ol>
-<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><ol>
-<li>定义回调函数名称 fn</li>
-<li>通过 script 标签的 src 属性请求接口数据 （script 标签不熟浏览器同源策略影响），指定回调函数为 fn，客户端将数据封装到 fn 函数调用后返回。</li>
-</ol>
-<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>设置 Access-Control-Allow-Origin 字段允许前端访问</p>
-<h2 id="nginx-反向代理"><a href="#nginx-反向代理" class="headerlink" title="nginx 反向代理"></a>nginx 反向代理</h2><p>正向代理：访问方主动设置，访问方知道，隐藏了真实的客户端<br>反向代理：被访问方设置的，访问方无感知，隐藏了真实的服务器</p>
-<p>反向代理有负载均衡的好处，同时将对真实服务器的请求反向代理到本机服务器，从而避免浏览器“同源策略限制”</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 请求：告知服务器实际请求所使用的 HTTP 方法和自定义标头 --&gt;</span><br><span class="line"><span class="attribute">Access-Control-Request-Method</span><span class="punctuation">: </span>POST</span><br><span class="line"><span class="attribute">Access-Control-Request-Headers</span><span class="punctuation">: </span>X-PINGOTHER, Content-Type</span><br><span class="line"></span><br><span class="line">&lt;!-- 响应 --&gt;</span><br><span class="line"><span class="attribute">Access-Control-Allow-Origin</span><span class="punctuation">: </span>https://foo.example</span><br><span class="line"><span class="attribute">Access-Control-Allow-Methods</span><span class="punctuation">: </span>POST, GET, OPTIONS</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span><span class="punctuation">: </span>X-PINGOTHER, Content-Type</span><br><span class="line"><span class="attribute">Access-Control-Max-Age</span><span class="punctuation">: </span>86400</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
           
         
@@ -1566,7 +1592,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1612,7 +1638,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -249,6 +249,1086 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/27/Vue2%E5%92%8CVue3%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/27/Vue2%E5%92%8CVue3%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">Vue2和Vue3的区别</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-27T19:47:53+08:00">
+                2024-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>template 单根节点和多根节点 Fragment</li>
+<li>API：选项式和同一逻辑组合式</li>
+<li>响应式：defineProperty 和 Proxy</li>
+<li>Diff 算法优化</li>
+<li>打包优化：Tree-shaking，按需引入 API，Vue2 全局 API 暴露在 Vue实例上</li>
+<li>异步组件 Suspense</li>
+<li>可移动组件 Teleport</li>
+<li>TypeScript</li>
+<li>事件缓存，</li>
+<li>虚拟Dom：PatchFlags，静态节点提升，预字符串化；动态节点收集，靶向更新</li>
+</ol>
+<h3 id="Object-defineProperty-和-Proxy"><a href="#Object-defineProperty-和-Proxy" class="headerlink" title="Object.defineProperty 和 Proxy"></a>Object.defineProperty 和 Proxy</h3><h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><p>只有 get 和 set，嵌套需要递归遍历，检测不到添加和删除，数组无法监听</p>
+<p><strong>Vue2怎么实现监听数组的</strong>：<br>不用 defineProperty，而是重写 数组的原型方法进行覆盖变异</p>
+<h4 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h4><p>对象层面，多种拦截方法，支持数组</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/" itemprop="url">输入url到页面渲染</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T15:52:01+08:00">
+                2024-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>浏览器进程：检查</li>
+<li>网络进程：缓存</li>
+<li>dns</li>
+<li>请求</li>
+<li>三次握手</li>
+<li>重定向</li>
+<li>四次挥手</li>
+<li>渲染进程：提交文档；浏览器进程：更新页面</li>
+<li>渲染过程：html树-css树-render树-布局-绘制-合成-GPU</li>
+</ol>
+<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>GUI 和 js 互斥</p>
+<ul>
+<li>GUI 渲染线程</li>
+<li>js 引擎线程</li>
+<li>定时器 线程</li>
+<li>异步 http 请求线程：处理回调函数</li>
+<li>WebWorker 多线程</li>
+</ul>
+<h2 id="1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程"><a href="#1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程" class="headerlink" title="1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程"></a>1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程</h2><h2 id="2-发起请求，查询缓存（协商缓存，强缓存）"><a href="#2-发起请求，查询缓存（协商缓存，强缓存）" class="headerlink" title="2. 发起请求，查询缓存（协商缓存，强缓存）"></a>2. 发起请求，查询缓存（协商缓存，强缓存）</h2><h3 id="强缓存：直接使用本地缓存支援，关心是否在有效期内"><a href="#强缓存：直接使用本地缓存支援，关心是否在有效期内" class="headerlink" title="强缓存：直接使用本地缓存支援，关心是否在有效期内"></a><strong>强缓存</strong>：直接使用本地缓存支援，关心<strong>是否在有效期内</strong></h3><p>从本地缓存中查找也是需要发起请求，如果命中缓存则返回 200状态码和资源</p>
+<h4 id="缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache"><a href="#缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache" class="headerlink" title="缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache"></a>缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache</h4><ul>
+<li><em>Serviec Worker</em>：独立线程</li>
+<li><em>Memory Cache</em>：内存缓存（短期），忽略缓存控制头，直接读取，若禁止缓存则需要 <code>Cache-Control: no-store</code>。缓存资源有：通过 preloader 加载的资源并行预加载；preload 指令标记的资源。</li>
+<li><em>Disk Cache</em>：硬盘缓存（持久）</li>
+<li><em>Push Cache</em>：推送缓存，只在会话中存在</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/#more" rel="contents">
+              Read the rest here &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="url">原型和原型链</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T12:09:16+08:00">
+                2024-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>每一个实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性；<br>每一个构造函数（包括 <code>Object</code> 函数）都是是 <code>Function</code> 函数的实例函数，所以每个构造函数上有 <code>__proto__</code> 属性，指向 <code>Function</code> 函数的 <code>prototype</code> 属性；<br>每一个 <code>prototype</code> 属性默认是一个空对象，是 <code>Object</code> 函数的实例函数，所以 <code>prototype</code> 属性上有 <code>__proto__</code> 属性，指向 <code>Object</code> 函数的 <code>prototype</code> 属性；<br><code>Object</code> 的 <code>prototype</code> 属性的 <code>__proto__</code> 属性指向 <code>null</code> 是原型链的终点。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/" itemprop="url">浅拷贝与深拷贝</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T11:49:28+08:00">
+                2024-02-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>对于引用类型数据来说，赋值是复制引用类型数据的堆内存地址</p>
+<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>对于引用类型数据来说，浅拷贝是创建一个新的对象，对第一层属性进行拷贝，若有深层的引用类型数据，则还是指向同一内存地址，如 拓展运算符，slice，concat，assign</p>
+<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>对于引用类型数据来说，深拷贝就是让两个引用类型数据完全独立，递归进行浅拷贝，深层的引用类型数据也指向不同内存地址，但是属性进行精确拷贝，如 _.cloneDeep, jQuery.extend, JSON.stringify（会忽略 undefined, symbol, function）</p>
+<h3 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep</span> (obj, hash = <span class="keyword">new</span> <span class="title class_">WeekMap</span>()) &#123;</span><br><span class="line">  <span class="keyword">if</span>(obj == <span class="literal">null</span>) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">RegExp</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RegExp</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Date</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Date</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Function</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Function</span> (<span class="string">&#x27;return&#x27;</span> + obj.<span class="title function_">toString</span>())()</span><br><span class="line">  <span class="keyword">if</span>(!(<span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span>)) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(hash.<span class="title function_">get</span>(obj)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(obj)</span><br><span class="line">  <span class="keyword">let</span> cloneObj = <span class="keyword">new</span> obj.<span class="title function_">constructor</span>(<span class="params"></span>)</span><br><span class="line">  hash.<span class="title function_">set</span>(obj,cloneObj)</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">      cloneObj[key] = <span class="title function_">cloneDeep</span>(obj[key],hash)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cloneObj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/" itemprop="url">Vue3源码：reactive</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T17:11:47+08:00">
+                2024-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>reactive 就是根据不同的对象类型(rawType -&gt; TargetType)，使用不同的处理器 handler，不同处理器里有一一对应的操作方法，将对象进行 Proxy 代理，并记录到 reactiveMap 中，返回代理对象;<br>Proxy 对应拦截操作的核心 api 是 Refelct 对应的方法，使用 Reflect 的原因是 receiver 参数使触发对象劫持时保证正确的 this 指向</p>
+<h2 id="reactive-源码"><a href="#reactive-源码" class="headerlink" title="reactive 源码"></a>reactive 源码</h2>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/#more" rel="contents">
+              Read the rest here &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/" itemprop="url">前端攻击</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T17:00:51+08:00">
+                2024-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="CSRF-跨站请求伪造"><a href="#CSRF-跨站请求伪造" class="headerlink" title="CSRF 跨站请求伪造"></a>CSRF 跨站请求伪造</h2><p>跨站：在被攻击网站上获得了 cookie，诱导进入第三方</p>
+<p>请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作</p>
+<p>类型：get，post，链接</p>
+<h2 id="XSS-跨站脚本攻击"><a href="#XSS-跨站脚本攻击" class="headerlink" title="XSS 跨站脚本攻击"></a>XSS 跨站脚本攻击</h2><ul>
+<li>存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行</li>
+<li>反射型：恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回，</li>
+<li>Dom 型：url 前端执行请求的路径</li>
+</ul>
+<p>预防：防止攻击者提交恶意代码</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Css/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/25/Css/" itemprop="url">CSS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T15:29:20+08:00">
+                2024-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CSS/" itemprop="url" rel="index">
+                    <span itemprop="name">CSS</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h2><p>MDN：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex" title="flex">flex的解释</a></p>
+<ol>
+<li>flex-grow 当容器还有剩余空间放大的比例</li>
+<li>flex-shrink 当容器没有剩余空间缩小的比例</li>
+<li>flex-basis 默认大小，以上两个是通过此值来计算是否放大或缩小的</li>
+<li><strong>flex: [flex-grow] [flex-shrink] [flex-basis]</strong> 原始值：flex:0 1 auto</li>
+<li>flex-direction 主轴方向 row-行 col-列</li>
+<li>flex-wrap 指定单行显示还是多行显示</li>
+<li><strong>flex-flow: [flex-direction] [flex-wrap]</strong></li>
+</ol>
+<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><ol>
+<li>static 正常</li>
+<li>relative 原始位置用空白占位，对于原始位置的偏移</li>
+<li>absolute 移出正常文档流，对最近的非 static 的祖先元素的右上角点的定位</li>
+<li>fixed 移出正常文档流，对屏幕视口的定位，滚动时不会改变，当元素祖先的 transform、perspective、filter 或 backdrop-filter 属性非 none 时，容器由视口改为该祖先。</li>
+<li>sticky</li>
+</ol>
+<h2 id="形状"><a href="#形状" class="headerlink" title="形状"></a>形状</h2><ol>
+<li>椭圆：长方形 + border-radius: 50% ; border-radius: 水平 &#x2F; 垂直；border-radius: 左上 右上 右下 左下</li>
+<li>平行四边形：transform: skewX(-45deg)</li>
+<li>菱形：transfrom: rotate(45deg); clip-path: polygon(50% 0, 100% 50%,50% 100%, 0 50%)</li>
+<li>切角：渐变{background: linear-gradient(-45deg, transparent 15px,)}</li>
+<li>梯形：3D模拟{transform: perspective(.5em) rorateX(5deg)}</li>
+</ol>
+<h2 id="行内元素-inline-，块级元素-block-，行内块元素-inline-block"><a href="#行内元素-inline-，块级元素-block-，行内块元素-inline-block" class="headerlink" title="行内元素(inline)，块级元素(block)，行内块元素(inline-block)"></a>行内元素(inline)，块级元素(block)，行内块元素(inline-block)</h2><p>区别：一是排列方式，二是宽高边距设置，三是默认宽度。</p>
+<ul>
+<li>行内元素：1.高度无效，padding，margin上下无效，行高 line-height 有效; 2.宽度无效，随内容而变化</li>
+<li>行内块元素: 一行中放置多个，宽度随内容，高度可设置</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/%E8%B7%A8%E5%9F%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/02/25/%E8%B7%A8%E5%9F%9F/" itemprop="url">跨域</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T14:43:00+08:00">
+                2024-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>浏览器同源策略：同协议，域名，端口的资源<br>限制：</p>
+<ol>
+<li>无法操作彼此的 DOM 元素</li>
+<li>无法共享缓存，如 cookie 和 localstorage</li>
+</ol>
+<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><ol>
+<li>定义回调函数名称 fn</li>
+<li>通过 script 标签的 src 属性请求接口数据 （script 标签不熟浏览器同源策略影响），指定回调函数为 fn，客户端将数据封装到 fn 函数调用后返回。</li>
+</ol>
+<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>设置 Access-Control-Allow-Origin 字段允许前端访问</p>
+<h2 id="nginx-反向代理"><a href="#nginx-反向代理" class="headerlink" title="nginx 反向代理"></a>nginx 反向代理</h2><p>正向代理：访问方主动设置，访问方知道，隐藏了真实的客户端<br>反向代理：被访问方设置的，访问方无感知，隐藏了真实的服务器</p>
+<p>反向代理有负载均衡的好处，同时将对真实服务器的请求反向代理到本机服务器，从而避免浏览器“同源策略限制”</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/23/%E7%AE%97%E6%B3%95%EF%BC%9A%E6%8E%92%E5%BA%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -581,983 +1661,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8Beffect%E5%92%8CDep%E7%9A%84%E7%BB%93%E6%9E%84/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8Beffect%E5%92%8CDep%E7%9A%84%E7%BB%93%E6%9E%84/" itemprop="url">Vue3源码：响应式原理之effect和Dep的结构</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-22T12:07:05+08:00">
-                2024-02-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>是什么：用 ReactiveEffect 将 fn 函数包装成 effect，用 Proxy 代理 原始对象 变成 响应式数据</li>
-<li>收集：fn 访问 响应式数据，在 Proxy 中 响应式数据的 依赖集合Dep 收集 effect，同时 effect 收集 响应式的依赖集合Dep</li>
-<li>触发：依赖 的意思是 fn 依赖 响应式数据，响应式数据 影响 fn。当响应式数据改变时 说明会影响到 fn， 所以要触发 fn，让 fn 更新状态；</li>
-<li>依赖更新：fn 更新状态时，需要的数据可能会改变，也会重新访问需要的 响应式数据，effect 收集 Dep 目的是订阅，Dep 收集 effect 的 目的是取消订阅</li>
-</ol>
-<h3 id="effect结构"><a href="#effect结构" class="headerlink" title="effect结构"></a>effect结构</h3>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9A%E5%93%8D%E5%BA%94%E5%BC%8F%E5%8E%9F%E7%90%86%E4%B9%8Beffect%E5%92%8CDep%E7%9A%84%E7%BB%93%E6%9E%84/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9ADiff/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9ADiff/" itemprop="url">Vue3源码：Diff</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-22T10:10:34+08:00">
-                2024-02-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>头尾对比，一有一无，都有剩余：由旧key找新key，由key找新index，新旧index映射，最长递增子序列找最小移动</p>
-<h2 id="Diff-源码"><a href="#Diff-源码" class="headerlink" title="Diff 源码"></a>Diff 源码</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/22/Vue3%E6%BA%90%E7%A0%81%EF%BC%9ADiff/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/" itemprop="url">Vue3源码：ref</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-21T11:16:09+08:00">
-                2024-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>reactive 用于对象的响应式方案，<br>ref 用于 原始值的响应式方案，<br>原因有2：原始值的赋值为原始值，对象的赋值为内存地址，也就导致原始值的形参和实参之间无引用关系，完全独立；Proxy无法对原始值代理</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">ref</span>(<span class="params">val</span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> wrapper = &#123;</span><br><span class="line">    <span class="attr">value</span>: val</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="title class_">Object</span>.<span class="title function_">defineProperty</span>(wrapper, <span class="string">&#x27;_v_isRef&#x27;</span>,&#123;</span><br><span class="line">    <span class="attr">value</span>: <span class="literal">true</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="title function_">reactive</span>(wrapper)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>ref 的实质是，用对象上的 value 属性代理原始值，再将该对象用 reactive Proxy代理</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Aref/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/" itemprop="url">Vue3源码：KeepAlive</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-21T10:26:31+08:00">
-                2024-02-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>  KeepAlive 就是创建一个 KeepAlive 组件，插槽为需要 keepalive 的组件。</p>
-<ol>
-<li><strong>在 KeepAlive 组件中主要做</strong>：创建一个不渲染的 div 隐藏容器，用来将组件所渲染的内容移动进去隐藏；创建失活和激活的函数；缓存 cache (Map 结构的对象)：key：vnode.type, value: vnode</li>
-<li><strong>在需要 keepalive 的组件上</strong>：添加 keptAlive 标志，patch 时根据此标志调用激活函数； 添加 shouldKeepAlive 标志，unmount 中根据此标志调用失活函数；添加 keepAliveInstance 为对应的 KeepAlive 组件，以便找到失活激活函数</li>
-<li>缓存使用最新一次访问算法</li>
-</ol>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/21/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Akeepalive/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/17/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Awatch/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/17/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Awatch/" itemprop="url">Vue3源码：watch</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-17T22:43:54+08:00">
-                2024-02-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>再来一遍：</p>
-<blockquote>
-<p><mark>响应式原理：将函数（用effect包装）与响应式数据建立联系</mark></p>
-</blockquote>
-<h2 id="watch-源码"><a href="#watch-源码" class="headerlink" title="watch 源码"></a>watch 源码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">traverse</span>(<span class="params">value, seen = <span class="keyword">new</span> <span class="built_in">Set</span>() </span>) &#123;</span><br><span class="line">  <span class="comment">// 读取的数据是原始值 || 没有值 || 已经读取过，就什么也不做</span></span><br><span class="line">  <span class="keyword">if</span>(<span class="keyword">typeof</span> value !== <span class="string">&quot;object&quot;</span> || value == <span class="literal">null</span> || seen.<span class="title function_">has</span>(value) ) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  seen.<span class="title function_">add</span>(value)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 目前只考虑对象解构，递归读取对象的每一个值</span></span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">const</span> key <span class="keyword">in</span> value) &#123;</span><br><span class="line">    <span class="title function_">tarverse</span>(value[key], seen)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> value</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/17/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Awatch/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/16/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Acomputed/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/16/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Acomputed/" itemprop="url">Vue3源码：computed</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-16T14:18:28+08:00">
-                2024-02-16
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/" itemprop="url" rel="index">
-                    <span itemprop="name">源码</span>
-                  </a>
-                </span>
-
-                
-                
-                  ， 
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BA%90%E7%A0%81/Vue3/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue3</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="computed-类型声明"><a href="#computed-类型声明" class="headerlink" title="computed 类型声明"></a>computed 类型声明</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> computed&lt;T&gt;(</span><br><span class="line">  <span class="attr">getter</span>: <span class="title class_">ComputedGetter</span>&lt;T&gt;,</span><br><span class="line">  debugOptions?: <span class="title class_">DebuggerOptions</span></span><br><span class="line">): <span class="title class_">ComputedRef</span>&lt;T&gt;</span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><mark>响应式原理：将函数（用effect包装）与响应式数据建立联系</mark></p>
-</blockquote>
-<p>computed 是包装getter函数，getter函数的返回值看作响应式数据</p>
-<p>将getter函数的返回值包装为响应式数据，就要实现get的收集，set的触发：</p>
-<ol>
-<li>用<code>obj.value=getter返回值</code>，外部读取<code>.value</code>属性，实现get依赖收集</li>
-<li>getter被触发的时候说明<code>obj.value</code>也变化，正常是在set里触发getter的依赖集合，计算属性直接在<code>trigger(effect)</code> 时 <code>trigger(getter的依赖集合)</code></li>
-</ol>
-<h2 id="computed-源码"><a href="#computed-源码" class="headerlink" title="computed 源码"></a>computed 源码</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">computed</span>(<span class="params">getter</span>) &#123;</span><br><span class="line">  <span class="keyword">let</span> value <span class="comment">// 返回值缓存</span></span><br><span class="line">  <span class="keyword">let</span> dirty = <span class="literal">true</span> <span class="comment">// 脏值检测</span></span><br><span class="line">  <span class="keyword">const</span> effectFn = <span class="title function_">effect</span>(getter, &#123;</span><br><span class="line">    <span class="comment">// 懒执行：创建 computed 时不执行 getter 函数</span></span><br><span class="line">    <span class="attr">lazy</span>: <span class="literal">true</span>, </span><br><span class="line"></span><br><span class="line">    <span class="comment">// getter 改变返回值，返回值的依赖集合 = obj.value的依赖集合</span></span><br><span class="line">    <span class="comment">// --&gt; 触发 getter 改变 obj.value 最重要是触发 obj.value 的依赖集合</span></span><br><span class="line">    <span class="title function_">schedule</span>(<span class="params"></span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(!dirty)&#123;</span><br><span class="line">        <span class="comment">// getter 函数改变说明 value值改变，说明值是脏的需要重新计算</span></span><br><span class="line">        dirty = <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">trigger</span>(obj,<span class="string">&quot;value&quot;</span>)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">const</span> obj = &#123;</span><br><span class="line">    <span class="keyword">get</span> <span class="title function_">value</span>() &#123;</span><br><span class="line">      <span class="keyword">if</span>(dirty) &#123;</span><br><span class="line">        <span class="comment">// 懒执行的手动执行：有其他函数依赖 value 才执行getter函数</span></span><br><span class="line">        value = <span class="title function_">effectFn</span>() </span><br><span class="line">        dirty = <span class="literal">false</span> <span class="comment">//计算过后值就干净了</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="title function_">track</span>(obj, <span class="string">&quot;value&quot;</span>)</span><br><span class="line">      <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/16/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Acomputed/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1603,7 +1711,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="文件链接再浏览器中打开是预览还是下载 预览：Content-type: application&#x2F;pdf;Content-Disposition: inline-下载：Content-type: application&#x2F;octet-stream 二进制流直接下载、Content-type: application&#x2F;pdf ; Content-Disposition: attachment  缓存 强">
+<meta name="description" content="文件链接再浏览器中打开是预览还是下载 预览：Content-type: application&#x2F;pdf;Content-Disposition: inline-下载：Content-type: application&#x2F;octet-stream 二进制流直接下载、Content-type: application&#x2F;pdf ; Content-Disposition: attachment  Cont">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Http请求头和响应头">
 <meta property="og:url" content="http://yi1wen.github.io/2024/02/27/Http%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%92%8C%E5%93%8D%E5%BA%94%E5%A4%B4/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="文件链接再浏览器中打开是预览还是下载 预览：Content-type: application&#x2F;pdf;Content-Disposition: inline-下载：Content-type: application&#x2F;octet-stream 二进制流直接下载、Content-type: application&#x2F;pdf ; Content-Disposition: attachment  缓存 强">
+<meta property="og:description" content="文件链接再浏览器中打开是预览还是下载 预览：Content-type: application&#x2F;pdf;Content-Disposition: inline-下载：Content-type: application&#x2F;octet-stream 二进制流直接下载、Content-type: application&#x2F;pdf ; Content-Disposition: attachment  Cont">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-27T12:01:23.000Z">
-<meta property="article:modified_time" content="2024-02-27T12:15:54.000Z">
+<meta property="article:modified_time" content="2024-03-28T07:03:16.000Z">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
 
@@ -322,6 +322,13 @@
         <h2 id="文件链接再浏览器中打开是预览还是下载"><a href="#文件链接再浏览器中打开是预览还是下载" class="headerlink" title="文件链接再浏览器中打开是预览还是下载"></a>文件链接再浏览器中打开是预览还是下载</h2><ul>
 <li>预览：<code>Content-type: application/pdf;Content-Disposition: inline</code><br>-下载：<code>Content-type: application/octet-stream</code> 二进制流直接下载、<code>Content-type: application/pdf ; Content-Disposition: attachment</code></li>
 </ul>
+<h2 id="Content-Type-type-类型-subtype-子类型"><a href="#Content-Type-type-类型-subtype-子类型" class="headerlink" title="Content-Type: type(类型)&#x2F;subtype(子类型)"></a>Content-Type: type(类型)&#x2F;subtype(子类型)</h2><ul>
+<li>type: application(二进制数据),model(三维模型数据),audio,font,image,video,text; 多部分类型 message,multipart</li>
+<li>application&#x2F;octet-stream 未知的二进制文件</li>
+<li>text&#x2F;plain 未知的文本文件：text&#x2F;css,text&#x2F;html,text&#x2F;javascript</li>
+<li>multipart&#x2F;form-data 用于 HTML 表单从浏览器发送信息给服务器。</li>
+<li>multipart&#x2F;byteranges 用于指出这个文件由若干部分组成，每一个都有其请求范围 206 + Content-Range</li>
+</ul>
 <h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><ul>
 <li>强缓存：<code>Empires</code>，<code>Cache-Control</code></li>
 <li>协商缓存：<code>Etag</code>，<code>Last-Modified</code></li>
@@ -332,6 +339,28 @@
 <h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><ul>
 <li><code>Cookie</code>,<code>set-Cookie</code></li>
 </ul>
+<h3 id="如何保证-Cookie-被安全发送"><a href="#如何保证-Cookie-被安全发送" class="headerlink" title="如何保证 Cookie 被安全发送"></a>如何保证 Cookie 被安全发送</h3><ul>
+<li>Secure 属性：通过 https 发送</li>
+<li>HttpOnly：无法使用 js 读取到 cookie，就无法恶意执行， 用于防范 XSS</li>
+<li>Domain：指定接受 Cookie 的主机</li>
+<li>Path：指定请求的路径</li>
+<li>SameSite：是否随跨站请求一起发送，防止 CSRF</li>
+</ul>
+<h3 id="Session-和-Cookie-的区别"><a href="#Session-和-Cookie-的区别" class="headerlink" title="Session 和 Cookie 的区别"></a>Session 和 Cookie 的区别</h3><ul>
+<li>Session 存储在服务端，Cookie 存储在客户端，都是存储用户信息的地方</li>
+<li>Http 是无状态协议， Session 用来弥补这个缺陷，每个用户有各自的 Session，存储状态信息，唯一标识为 sessionid，所以 Session 是用户状态与信息的内容</li>
+<li>使用 Cookie 机制来在每次 Http 请求的时候带上 sid，还可以自动登录，是一个存储用户状态与信息的容器</li>
+</ul>
+<h2 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h2><h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><ol>
+<li>GET,HEAD,POST(Content-Type: application&#x2F;x-www-form-urlencoded, multipart&#x2F;form-data, text&#x2F;plain, 也就是表单数据，未知文本文件)</li>
+<li>无自定义 HTTP 头部</li>
+</ol>
+<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><ul>
+<li>OPTIONS 请求允许通信选项：CORS 中的预检请求，以检测实际请求是否可以被服务器所接受</li>
+<li>请求原因：复杂请求，跨域，自定义请求头</li>
+<li>如何避免：1。使用代理避免跨域 2.简单请求 3.不自定义请求头</li>
+</ul>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 请求：告知服务器实际请求所使用的 HTTP 方法和自定义标头 --&gt;</span><br><span class="line"><span class="attribute">Access-Control-Request-Method</span><span class="punctuation">: </span>POST</span><br><span class="line"><span class="attribute">Access-Control-Request-Headers</span><span class="punctuation">: </span>X-PINGOTHER, Content-Type</span><br><span class="line"></span><br><span class="line">&lt;!-- 响应 --&gt;</span><br><span class="line"><span class="attribute">Access-Control-Allow-Origin</span><span class="punctuation">: </span>https://foo.example</span><br><span class="line"><span class="attribute">Access-Control-Allow-Methods</span><span class="punctuation">: </span>POST, GET, OPTIONS</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span><span class="punctuation">: </span>X-PINGOTHER, Content-Type</span><br><span class="line"><span class="attribute">Access-Control-Max-Age</span><span class="punctuation">: </span>86400</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -445,7 +474,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -516,7 +545,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E5%86%8D%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E6%89%93%E5%BC%80%E6%98%AF%E9%A2%84%E8%A7%88%E8%BF%98%E6%98%AF%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">文件链接再浏览器中打开是预览还是下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">2.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F"><span class="nav-number">3.</span> <span class="nav-text">跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">4.</span> <span class="nav-text">Cookie</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E5%86%8D%E6%B5%8F%E8%A7%88%E5%99%A8%E4%B8%AD%E6%89%93%E5%BC%80%E6%98%AF%E9%A2%84%E8%A7%88%E8%BF%98%E6%98%AF%E4%B8%8B%E8%BD%BD"><span class="nav-number">1.</span> <span class="nav-text">文件链接再浏览器中打开是预览还是下载</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Content-Type-type-%E7%B1%BB%E5%9E%8B-subtype-%E5%AD%90%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">Content-Type: type(类型)&#x2F;subtype(子类型)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98"><span class="nav-number">3.</span> <span class="nav-text">缓存</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E5%9F%9F"><span class="nav-number">4.</span> <span class="nav-text">跨域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Cookie"><span class="nav-number">5.</span> <span class="nav-text">Cookie</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BF%9D%E8%AF%81-Cookie-%E8%A2%AB%E5%AE%89%E5%85%A8%E5%8F%91%E9%80%81"><span class="nav-number">5.1.</span> <span class="nav-text">如何保证 Cookie 被安全发送</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Session-%E5%92%8C-Cookie-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">5.2.</span> <span class="nav-text">Session 和 Cookie 的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%B7%E6%B1%82%E6%96%B9%E6%B3%95"><span class="nav-number">6.</span> <span class="nav-text">请求方法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AE%80%E5%8D%95%E8%AF%B7%E6%B1%82"><span class="nav-number">6.1.</span> <span class="nav-text">简单请求</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OPTIONS"><span class="nav-number">6.2.</span> <span class="nav-text">OPTIONS</span></a></li></ol></li></ol></div>
             
 
           </div>

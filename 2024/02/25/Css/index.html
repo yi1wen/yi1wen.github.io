@@ -87,7 +87,7 @@
 <meta property="og:description" content="flexMDN：flex的解释  flex-grow 当容器还有剩余空间放大的比例 flex-shrink 当容器没有剩余空间缩小的比例 flex-basis 默认大小，以上两个是通过此值来计算是否放大或缩小的 flex: [flex-grow] [flex-shrink] [flex-basis] 原始值：flex:0 1 auto flex-direction 主轴方向 row-行 col-列">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-25T07:29:20.000Z">
-<meta property="article:modified_time" content="2024-02-25T07:59:26.000Z">
+<meta property="article:modified_time" content="2024-03-28T11:25:58.000Z">
 <meta property="article:author" content="义依雯">
 <meta property="article:tag" content="CSS">
 <meta name="twitter:card" content="summary">
@@ -359,6 +359,18 @@
 <li>fixed 移出正常文档流，对屏幕视口的定位，滚动时不会改变，当元素祖先的 transform、perspective、filter 或 backdrop-filter 属性非 none 时，容器由视口改为该祖先。</li>
 <li>sticky</li>
 </ol>
+<h2 id="形状"><a href="#形状" class="headerlink" title="形状"></a>形状</h2><ol>
+<li>椭圆：长方形 + border-radius: 50% ; border-radius: 水平 &#x2F; 垂直；border-radius: 左上 右上 右下 左下</li>
+<li>平行四边形：transform: skewX(-45deg)</li>
+<li>菱形：transfrom: rotate(45deg); clip-path: polygon(50% 0, 100% 50%,50% 100%, 0 50%)</li>
+<li>切角：渐变{background: linear-gradient(-45deg, transparent 15px,)}</li>
+<li>梯形：3D模拟{transform: perspective(.5em) rorateX(5deg)}</li>
+</ol>
+<h2 id="行内元素-inline-，块级元素-block-，行内块元素-inline-block"><a href="#行内元素-inline-，块级元素-block-，行内块元素-inline-block" class="headerlink" title="行内元素(inline)，块级元素(block)，行内块元素(inline-block)"></a>行内元素(inline)，块级元素(block)，行内块元素(inline-block)</h2><p>区别：一是排列方式，二是宽高边距设置，三是默认宽度。</p>
+<ul>
+<li>行内元素：1.高度无效，padding，margin上下无效，行高 line-height 有效; 2.宽度无效，随内容而变化</li>
+<li>行内块元素: 一行中放置多个，宽度随内容，高度可设置</li>
+</ul>
 
       
     </div>
@@ -478,7 +490,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-count">26</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -549,7 +561,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#flex"><span class="nav-number">1.</span> <span class="nav-text">flex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#position"><span class="nav-number">2.</span> <span class="nav-text">position</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#flex"><span class="nav-number">1.</span> <span class="nav-text">flex</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#position"><span class="nav-number">2.</span> <span class="nav-text">position</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%A2%E7%8A%B6"><span class="nav-number">3.</span> <span class="nav-text">形状</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%8C%E5%86%85%E5%85%83%E7%B4%A0-inline-%EF%BC%8C%E5%9D%97%E7%BA%A7%E5%85%83%E7%B4%A0-block-%EF%BC%8C%E8%A1%8C%E5%86%85%E5%9D%97%E5%85%83%E7%B4%A0-inline-block"><span class="nav-number">4.</span> <span class="nav-text">行内元素(inline)，块级元素(block)，行内块元素(inline-block)</span></a></li></ol></div>
             
 
           </div>
