@@ -249,7 +249,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/28/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/23/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -268,7 +268,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/28/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/" itemprop="url">前端模块化</a></h1>
+                <a class="post-title-link" href="/2024/06/23/%E6%95%B0%E7%BB%84%E6%89%81%E5%B9%B3%E5%8C%96/" itemprop="url">数组扁平化</a></h1>
         
 
         <div class="post-meta">
@@ -280,8 +280,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-28T12:20:16+08:00">
-                2024-02-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-23T16:03:55+08:00">
+                2024-06-23
               </time>
             
 
@@ -320,13 +320,134 @@
       
         
           
-            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决了什么问题：命名冲突，依赖管理</p>
-<ol>
-<li>Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认</li>
-<li>ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认</li>
-<li>AMD：异步形式加载，回调适用defined</li>
-<li>UMD：结合 Commonjs 和 AMD</li>
-</ol>
+            <h3 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">flatten1</span> (arr) &#123;</span><br><span class="line">  <span class="keyword">let</span> result = []</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>;i&lt;arr.<span class="property">length</span>;i++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title class_">Array</span>.<span class="title function_">isArray</span>(arr[i])) &#123;</span><br><span class="line">      result = result.<span class="title function_">concat</span>(<span class="title function_">flatten</span>(arr[i]))</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      result.<span class="title function_">push</span>(arr[i])</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> result</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">flatten2</span> (arr) &#123;</span><br><span class="line">  <span class="keyword">return</span> arr.<span class="title function_">reduce</span>(<span class="function">(<span class="params">result,cur</span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title class_">Array</span>.<span class="title function_">isArray</span>(cur)) &#123;</span><br><span class="line">      <span class="keyword">return</span> result.<span class="title function_">concat</span>(<span class="title function_">flatten</span>(cur))</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> result.<span class="title function_">concat</span>(cur)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,[]) <span class="comment">// [] 表示result的初始值</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span>* <span class="title function_">yieldflatten</span>(<span class="params">arr</span>) &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> item <span class="keyword">of</span> arr) &#123;</span><br><span class="line">    <span class="keyword">if</span>(<span class="title class_">Array</span>.<span class="title function_">isArray</span>(item)) &#123;</span><br><span class="line">      <span class="keyword">yield</span>* <span class="title function_">flatten</span>(item) </span><br><span class="line">      <span class="comment">// yield* 后跟可迭代对象的表达式，并产生它返回的每个值的IteratorResult 对象，它有两个属性，value 和 done</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">yield</span> item;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> flattened = [...<span class="title function_">yieldflatten</span>([<span class="number">0</span>，<span class="number">1</span>，<span class="number">2</span>，<span class="number">3</span>，<span class="number">4</span>])] <span class="comment">// 生成器结果中解构出来</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>yield 返回 的东西要加.next().value才能拿到</p>
+<h3 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">flatten</span> (arr) &#123;</span><br><span class="line">  <span class="comment">// toString 自动拍平数组，用,连接</span></span><br><span class="line">  <span class="keyword">return</span> arr.<span class="title function_">toString</span>().<span class="title function_">split</span>(<span class="string">&#x27;,&#x27;</span>).<span class="title function_">map</span>(<span class="function"><span class="params">item</span> =&gt;</span> <span class="title class_">Number</span>(item))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ES6-的-flat-depth-方法"><a href="#ES6-的-flat-depth-方法" class="headerlink" title="ES6 的 flat(depth)方法"></a>ES6 的 flat(depth)方法</h3><h3 id="JSON序列化-后-正则表达式去除"><a href="#JSON序列化-后-正则表达式去除" class="headerlink" title="JSON序列化 后 正则表达式去除 []"></a>JSON序列化 后 正则表达式去除 []</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">flatten</span>(<span class="params">arr</span>)&#123;</span><br><span class="line">  <span class="keyword">let</span> result = <span class="title class_">JSON</span>.<span class="title function_">stringify</span>(arr).<span class="title function_">replace</span>(<span class="regexp">/( \[ | \] )/g</span>,<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  result = <span class="string">&#x27;[&#x27;</span> + result + <span class="string">&#x27;]&#x27;</span></span><br><span class="line">  <span class="keyword">return</span> <span class="title class_">JSON</span>.<span class="title function_">parse</span>(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="栈结构，如果是数组则，拍平一层后重新入栈"><a href="#栈结构，如果是数组则，拍平一层后重新入栈" class="headerlink" title="栈结构，如果是数组则，拍平一层后重新入栈"></a>栈结构，如果是数组则，拍平一层后重新入栈</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/23/TS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/06/23/TS/" itemprop="url">TS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-23T15:54:19+08:00">
+                2024-06-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="interface-和-type-的区别"><a href="#interface-和-type-的区别" class="headerlink" title="interface 和 type 的区别"></a>interface 和 type 的区别</h2><p>type是类型别名，给已存在的类型创建新名字，可以表示基本，对象，联合类型和元组，交集<br>interface仅用于表示对象类型，可以合并声明<br>都可以被继承</p>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><p>泛型是类型变量，在不确定具体类型的时候，用泛型来表达输入和输出的类型逻辑</p>
 
           
         
@@ -375,7 +496,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/27/Http%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%92%8C%E5%93%8D%E5%BA%94%E5%A4%B4/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/22/%E7%BB%A7%E6%89%BF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -394,7 +515,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/27/Http%E8%AF%B7%E6%B1%82%E5%A4%B4%E5%92%8C%E5%93%8D%E5%BA%94%E5%A4%B4/" itemprop="url">Http请求头和响应头</a></h1>
+                <a class="post-title-link" href="/2024/06/22/%E7%BB%A7%E6%89%BF/" itemprop="url">继承</a></h1>
         
 
         <div class="post-meta">
@@ -406,169 +527,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-27T20:01:23+08:00">
-                2024-02-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="文件链接再浏览器中打开是预览还是下载"><a href="#文件链接再浏览器中打开是预览还是下载" class="headerlink" title="文件链接再浏览器中打开是预览还是下载"></a>文件链接再浏览器中打开是预览还是下载</h2><ul>
-<li>预览：<code>Content-type: application/pdf;Content-Disposition: inline</code><br>-下载：<code>Content-type: application/octet-stream</code> 二进制流直接下载、<code>Content-type: application/pdf ; Content-Disposition: attachment</code></li>
-</ul>
-<h2 id="Content-Type-type-类型-subtype-子类型"><a href="#Content-Type-type-类型-subtype-子类型" class="headerlink" title="Content-Type: type(类型)&#x2F;subtype(子类型)"></a>Content-Type: type(类型)&#x2F;subtype(子类型)</h2><ul>
-<li>type: application(二进制数据),model(三维模型数据),audio,font,image,video,text; 多部分类型 message,multipart</li>
-<li>application&#x2F;octet-stream 未知的二进制文件</li>
-<li>text&#x2F;plain 未知的文本文件：text&#x2F;css,text&#x2F;html,text&#x2F;javascript</li>
-<li>multipart&#x2F;form-data 用于 HTML 表单从浏览器发送信息给服务器。</li>
-<li>multipart&#x2F;byteranges 用于指出这个文件由若干部分组成，每一个都有其请求范围 206 + Content-Range</li>
-</ul>
-<h2 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h2><ul>
-<li>强缓存：<code>Empires</code>，<code>Cache-Control</code></li>
-<li>协商缓存：<code>Etag</code>，<code>Last-Modified</code></li>
-</ul>
-<h2 id="跨域"><a href="#跨域" class="headerlink" title="跨域"></a>跨域</h2><ul>
-<li><code>Access-Control-Allow-Origin</code></li>
-</ul>
-<h2 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h2><ul>
-<li><code>Cookie</code>,<code>set-Cookie</code></li>
-</ul>
-<h3 id="如何保证-Cookie-被安全发送"><a href="#如何保证-Cookie-被安全发送" class="headerlink" title="如何保证 Cookie 被安全发送"></a>如何保证 Cookie 被安全发送</h3><ul>
-<li>Secure 属性：通过 https 发送</li>
-<li>HttpOnly：无法使用 js 读取到 cookie，就无法恶意执行， 用于防范 XSS</li>
-<li>Domain：指定接受 Cookie 的主机</li>
-<li>Path：指定请求的路径</li>
-<li>SameSite：是否随跨站请求一起发送，防止 CSRF</li>
-</ul>
-<h3 id="Session-和-Cookie-的区别"><a href="#Session-和-Cookie-的区别" class="headerlink" title="Session 和 Cookie 的区别"></a>Session 和 Cookie 的区别</h3><ul>
-<li>Session 存储在服务端，Cookie 存储在客户端，都是存储用户信息的地方</li>
-<li>Http 是无状态协议， Session 用来弥补这个缺陷，每个用户有各自的 Session，存储状态信息，唯一标识为 sessionid，所以 Session 是用户状态与信息的内容</li>
-<li>使用 Cookie 机制来在每次 Http 请求的时候带上 sid，还可以自动登录，是一个存储用户状态与信息的容器</li>
-</ul>
-<h2 id="请求方法"><a href="#请求方法" class="headerlink" title="请求方法"></a>请求方法</h2><h3 id="简单请求"><a href="#简单请求" class="headerlink" title="简单请求"></a>简单请求</h3><ol>
-<li>GET,HEAD,POST(Content-Type: application&#x2F;x-www-form-urlencoded, multipart&#x2F;form-data, text&#x2F;plain, 也就是表单数据，未知文本文件)</li>
-<li>无自定义 HTTP 头部</li>
-</ol>
-<h3 id="OPTIONS"><a href="#OPTIONS" class="headerlink" title="OPTIONS"></a>OPTIONS</h3><ul>
-<li>OPTIONS 请求允许通信选项：CORS 中的预检请求，以检测实际请求是否可以被服务器所接受</li>
-<li>请求原因：复杂请求，跨域，自定义请求头</li>
-<li>如何避免：1。使用代理避免跨域 2.简单请求 3.不自定义请求头</li>
-</ul>
-<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 请求：告知服务器实际请求所使用的 HTTP 方法和自定义标头 --&gt;</span><br><span class="line"><span class="attribute">Access-Control-Request-Method</span><span class="punctuation">: </span>POST</span><br><span class="line"><span class="attribute">Access-Control-Request-Headers</span><span class="punctuation">: </span>X-PINGOTHER, Content-Type</span><br><span class="line"></span><br><span class="line">&lt;!-- 响应 --&gt;</span><br><span class="line"><span class="attribute">Access-Control-Allow-Origin</span><span class="punctuation">: </span>https://foo.example</span><br><span class="line"><span class="attribute">Access-Control-Allow-Methods</span><span class="punctuation">: </span>POST, GET, OPTIONS</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span><span class="punctuation">: </span>X-PINGOTHER, Content-Type</span><br><span class="line"><span class="attribute">Access-Control-Max-Age</span><span class="punctuation">: </span>86400</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/27/Vue2%E5%92%8CVue3%E7%9A%84%E5%8C%BA%E5%88%AB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/27/Vue2%E5%92%8CVue3%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">Vue2和Vue3的区别</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-27T19:47:53+08:00">
-                2024-02-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-22T19:17:15+08:00">
+                2024-06-22
               </time>
             
 
@@ -608,20 +568,35 @@
         
           
             <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>template 单根节点和多根节点 Fragment</li>
-<li>API：选项式和同一逻辑组合式</li>
-<li>响应式：defineProperty 和 Proxy</li>
-<li>Diff 算法优化</li>
-<li>打包优化：Tree-shaking，按需引入 API，Vue2 全局 API 暴露在 Vue实例上</li>
-<li>异步组件 Suspense</li>
-<li>可移动组件 Teleport</li>
-<li>TypeScript</li>
-<li>事件缓存，</li>
-<li>虚拟Dom：PatchFlags，静态节点提升，预字符串化；动态节点收集，靶向更新</li>
+<li>原型链继承</li>
+<li>构造函数继承</li>
+<li>组合继承</li>
+<li>原型式继承</li>
+<li>寄生式继承</li>
+<li>寄生组合式</li>
+<li>extends</li>
 </ol>
-<h3 id="Object-defineProperty-和-Proxy"><a href="#Object-defineProperty-和-Proxy" class="headerlink" title="Object.defineProperty 和 Proxy"></a>Object.defineProperty 和 Proxy</h3><h4 id="Object-defineProperty"><a href="#Object-defineProperty" class="headerlink" title="Object.defineProperty"></a>Object.defineProperty</h4><p>只有 get 和 set，嵌套需要递归遍历，检测不到添加和删除，数组无法监听</p>
-<p><strong>Vue2怎么实现监听数组的</strong>：<br>不用 defineProperty，而是重写 数组的原型方法进行覆盖变异</p>
-<h4 id="Proxy"><a href="#Proxy" class="headerlink" title="Proxy"></a>Proxy</h4><p>对象层面，多种拦截方法，支持数组</p>
+<h3 id="原型链继承"><a href="#原型链继承" class="headerlink" title="原型链继承"></a>原型链继承</h3><p>子类的构造函数的 prototype 原空对象，现赋值为父类构造函数的实例对象<br><code>child.__proto__ = Children.prototype, Children.prototype.__proto__ = Parent.prototype</code><br>缺点：只能继承方法，不能继承实例属性</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;Parent&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 子类构造函数重写实例属性</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Children</span>(<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = <span class="string">&#x27;Children&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Children</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Parent</span>()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="构造函数继承"><a href="#构造函数继承" class="headerlink" title="构造函数继承"></a>构造函数继承</h3><p>子类构造函数中用 call ，apply，调用父类构造函数，绑定实例属性的this为子类构造函数<br>缺点：只能继承实例属性，不能继承原型链</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Children</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="title class_">Parent</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name) <span class="comment">// 这里执行了Parent的this.name = name，就是在Children函数中添加了name属性</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> child = <span class="keyword">new</span> <span class="title class_">Children</span>(<span class="string">&#x27;Child&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="组合继承：原型链-构造函数"><a href="#组合继承：原型链-构造函数" class="headerlink" title="组合继承：原型链 + 构造函数"></a>组合继承：原型链 + 构造函数</h3><p>原型链缺点：只能继承函数，不能继承实例属性<br>构造函数缺点：只能继承实例属性，不能继承原型链</p>
+<p>组合继承缺点：调用两次父类构造函数，造成不必要的开销</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">sayHello</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Children</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="title class_">Parent</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name)</span><br><span class="line">&#125;</span><br><span class="line"><span class="title class_">Children</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="keyword">new</span> <span class="title class_">Parent</span>()</span><br></pre></td></tr></table></figure>
+
+<h3 id="原型式继承"><a href="#原型式继承" class="headerlink" title="原型式继承"></a>原型式继承</h3><p>无构造函数，用Object.create，新建空对象作为子类对象，其原型指向父类对象<br><code>child.__proto__ = parent</code><br>缺点：子类实例无法向父类传参</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> parent = &#123;</span><br><span class="line">  <span class="attr">name</span>: <span class="string">&#x27;Parent&#x27;</span>,</span><br><span class="line">  <span class="attr">sayHello</span>: <span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&#x27;hello&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="寄生式继承：原型式-工厂函数"><a href="#寄生式继承：原型式-工厂函数" class="headerlink" title="寄生式继承：原型式 + 工厂函数"></a>寄生式继承：原型式 + 工厂函数</h3><p>不需要单独创建构造函数<br>缺点：工厂函数中自定义添加属性，无法复用函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> parent = &#123;</span><br><span class="line">  <span class="attr">namm</span>: <span class="string">&#x27;parent&#x27;</span>,</span><br><span class="line">  <span class="attr">age</span>: <span class="number">18</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createChild</span>(<span class="params">parent</span>) &#123;</span><br><span class="line">  <span class="comment">// 构造一个临时的构造函数，其实例函数的原型指向父类对象</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">Fun</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">  <span class="title class_">Fun</span>.<span class="property"><span class="keyword">prototype</span></span> = parent</span><br><span class="line">  <span class="keyword">let</span> child = <span class="keyword">new</span> <span class="title class_">Fun</span>()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 为child添加其他属性</span></span><br><span class="line">  <span class="keyword">return</span> child</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> child1 = <span class="title function_">createChild</span>(parent)</span><br></pre></td></tr></table></figure>
+
+<h3 id="寄生组合式"><a href="#寄生组合式" class="headerlink" title="寄生组合式"></a>寄生组合式</h3><p>寄生缺点：无法复用为子类对象添加的函数<br>组合式缺点：调用两次父类构造函数<br>组合寄生式优点：只引用一次父类构造函数，继承父类原型链，实例属性，添加子类公共私有方法</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">Parent</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">function</span> <span class="title function_">Children</span>(<span class="params">name</span>) &#123;</span><br><span class="line">  <span class="title class_">Parent</span>.<span class="title function_">call</span>(<span class="variable language_">this</span>, name) <span class="comment">// 1.继承父类实例属性</span></span><br><span class="line">  <span class="comment">// 添加其他子类私有属性........</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">createChildrenPrototypeToParentPrototype</span>(<span class="title class_">Children</span>,<span class="title class_">Parent</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.继承父类构造函数的原型链</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">createChildrenPrototypeToParentPrototype</span>(<span class="params">Children,Parent</span>) &#123;</span><br><span class="line">  <span class="comment">// 构造一个临时的构造函数，构造prototype实例对象，指向父类实例函数的prototype</span></span><br><span class="line">  <span class="keyword">function</span> <span class="title function_">Fun</span>(<span class="params"></span>) &#123;&#125;</span><br><span class="line">  <span class="title class_">Fun</span>.<span class="property"><span class="keyword">prototype</span></span> = <span class="title class_">Parent</span>.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line">  <span class="keyword">let</span> prototype = <span class="keyword">new</span> <span class="title class_">Fun</span>()</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 原constructor是指向Fun，变为指向子类构造函数</span></span><br><span class="line">  prototype.<span class="property">constructor</span> = <span class="title class_">Child</span></span><br><span class="line">  <span class="title class_">Children</span>.<span class="property"><span class="keyword">prototype</span></span> = prototype</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> child1 = <span class="title function_">createChild</span>(parent)</span><br></pre></td></tr></table></figure>
+
+<h3 id="extends"><a href="#extends" class="headerlink" title="extends"></a>extends</h3><p>ES6 的 类概念</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Parent</span>&#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">name</span> = name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Children</span> <span class="keyword">extends</span> <span class="title class_ inherited__">Parent</span>&#123;</span><br><span class="line">  <span class="title function_">constructor</span>(<span class="params">name</span>) &#123;</span><br><span class="line">    <span class="variable language_">super</span>(name) <span class="comment">// super关键字，调用父类构造函数</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -670,7 +645,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/22/Promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -689,7 +664,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/" itemprop="url">输入url到页面渲染</a></h1>
+                <a class="post-title-link" href="/2024/06/22/Promise/" itemprop="url">Promise</a></h1>
         
 
         <div class="post-meta">
@@ -701,8 +676,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T15:52:01+08:00">
-                2024-02-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-22T18:38:49+08:00">
+                2024-06-22
               </time>
             
 
@@ -740,157 +715,146 @@
 
       
         
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
-<li>浏览器进程：检查</li>
-<li>网络进程：缓存</li>
-<li>dns</li>
-<li>请求</li>
-<li>三次握手</li>
-<li>重定向</li>
-<li>四次挥手</li>
-<li>渲染进程：提交文档；浏览器进程：更新页面</li>
-<li>渲染过程：html树-css树-render树-布局-绘制-合成-GPU</li>
+          
+            <h2 id="Promise-的理解"><a href="#Promise-的理解" class="headerlink" title="Promise 的理解"></a>Promise 的理解</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br></pre></td><td class="code"><pre><span class="line">(<span class="keyword">function</span>(<span class="params"><span class="variable language_">window</span></span>) &#123;</span><br><span class="line">  <span class="keyword">class</span> <span class="title class_">Promise</span>&#123;</span><br><span class="line">    <span class="title function_">constructor</span>(<span class="params">executor</span>) &#123;</span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">PromiseState</span> = <span class="string">&quot;pending&quot;</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">PromiseResult</span> = <span class="literal">undefined</span></span><br><span class="line">      <span class="variable language_">this</span>.<span class="property">callBackFn</span> = [] <span class="comment">// ?</span></span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> <span class="title function_">_resolve</span> = value =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">PromiseState</span> !== <span class="string">&quot;pending&quot;</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">PromiseState</span> = <span class="string">&quot;fulfilled&quot;</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">PromiseResult</span> = value</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">callBackFn</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">          item.<span class="title function_">onfulfilled</span>()</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">const</span> <span class="title function_">_reject</span> = value =&gt; &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">PromiseState</span> !== <span class="string">&quot;pending&quot;</span>) <span class="keyword">return</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">PromiseState</span> = <span class="string">&quot;rejected&quot;</span></span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">PromiseResult</span> = value</span><br><span class="line">        <span class="variable language_">this</span>.<span class="property">callBackFn</span>.<span class="title function_">forEach</span>(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">          item.<span class="title function_">onrejected</span>()</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="title function_">executor</span>(_resolve,_reject)</span><br><span class="line">      &#125; <span class="keyword">catch</span> (err) &#123;</span><br><span class="line">        <span class="title function_">_reject</span>(err)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// then 返回的也是一个 Promise</span></span><br><span class="line">    <span class="comment">// 1. 处理传入的 成功函数 和 失败函数</span></span><br><span class="line">    <span class="comment">// 2. 返回Promise(resolve,reject)，封装执行函数</span></span><br><span class="line">    <span class="comment">//    成功函数或者失败函数返回的是 一个 Promise，此Promise结果就是then返回的Promise结果，resolve 和 reject 传递</span></span><br><span class="line">    <span class="comment">//    返回了东西，成功</span></span><br><span class="line">    <span class="title function_">then</span>(<span class="params">onfulfilled,onrejected</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(!onfulfilled <span class="keyword">instanceof</span> <span class="title class_">Function</span>) &#123;</span><br><span class="line">        onfulfilled = <span class="function"><span class="params">value</span> =&gt;</span> value</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span>(!onrejected <span class="keyword">instanceof</span> <span class="title class_">Function</span>) &#123;</span><br><span class="line">        onrejected = <span class="function"><span class="params">value</span> =&gt;</span> value</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span> (<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="variable language_">this</span>.<span class="property">PromiseState</span> === <span class="string">&quot;fulfilled&quot;</span>)&#123;</span><br><span class="line">            _common.<span class="title function_">call</span>(<span class="variable language_">this</span>, onfulfilled)</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">PromiseState</span> === <span class="string">&quot;rejected&quot;</span>)&#123;</span><br><span class="line">            _common.<span class="title function_">call</span>(<span class="variable language_">this</span>, onrejected)</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="variable language_">this</span>.<span class="property">callbackFn</span>.<span class="title function_">push</span>(&#123;</span><br><span class="line">            onfulfilled : _common.<span class="title function_">bind</span>(<span class="variable language_">this</span>, onfulfilled),</span><br><span class="line">            onrejected : _common.<span class="title function_">bind</span>(<span class="variable language_">this</span>, onrejected)</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 封装执行函数</span></span><br><span class="line">        <span class="keyword">const</span> _common = <span class="keyword">function</span>(<span class="params">callback</span>) &#123;</span><br><span class="line">          <span class="built_in">setTimeout</span>(()= &gt;&#123;</span><br><span class="line">            <span class="comment">// 传入PromiseResult执行一下</span></span><br><span class="line">            <span class="keyword">const</span> value = <span class="title function_">callback</span>(<span class="variable language_">this</span>.<span class="property">PromiseResult</span>)</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">              <span class="keyword">if</span>(value <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">                value.<span class="title function_">then</span>(resolve,reject)</span><br><span class="line">              &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="title function_">resolve</span>(value)</span><br><span class="line">              &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> &#123;</span><br><span class="line">              <span class="title function_">reject</span>(err)</span><br><span class="line">            &#125;</span><br><span class="line">          &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">catch</span> () &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="title function_">then</span>(<span class="literal">undefined</span>, onrejected)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="title function_">resolve</span>(<span class="params">value</span>) &#123;</span><br><span class="line">      <span class="keyword">if</span>(value <span class="keyword">instanceof</span> <span class="title class_">Promise</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">resolve</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="title function_">resolve</span>(value)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">reject</span>(<span class="params">value</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span>&#123;</span><br><span class="line">      <span class="title function_">reject</span>(value)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> all (<span class="title class_">PromiseArr</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> successArr = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="title class_">PromiseArr</span>.<span class="property">length</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span> ( <span class="function">(<span class="params">resolve,reject</span>)=&gt;</span> &#123;</span><br><span class="line">      <span class="title class_">PromiseArr</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">value,i</span>) =&gt;</span> &#123;</span><br><span class="line">        value.<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">          index ++</span><br><span class="line">          successArr[i] = res</span><br><span class="line">          </span><br><span class="line">          <span class="keyword">if</span>(index == <span class="title class_">PromiseArr</span>.<span class="property">length</span>) &#123;</span><br><span class="line">            <span class="title function_">resolve</span>(successArr)</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;,<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="title function_">reject</span>(err)</span><br><span class="line">        &#125;)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> race (<span class="title class_">PromiseArr</span>) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve,reject</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title class_">PromiseArr</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">value</span>) =&gt;</span> &#123;</span><br><span class="line">        value.<span class="title function_">then</span>(resolve,reject)</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">static</span> <span class="title function_">allSettled</span>(<span class="params">PromiseArr</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> index = <span class="number">0</span></span><br><span class="line">    <span class="keyword">let</span> resultArr = <span class="keyword">new</span> <span class="title class_">Array</span>(<span class="title class_">PromiseArr</span>.<span class="property">length</span>)</span><br><span class="line">    <span class="title class_">PromiseArr</span>.<span class="title function_">forEach</span>(<span class="function">(<span class="params">value,i</span>) =&gt;</span> &#123;</span><br><span class="line">      value.<span class="title function_">then</span>(<span class="function"><span class="params">res</span> =&gt;</span> &#123;</span><br><span class="line">        resultArr[i] = res</span><br><span class="line">        index ++</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(index == <span class="title class_">PromiseArr</span>.<span class="property">length</span>) &#123;</span><br><span class="line">          <span class="title function_">resolve</span>(resultArr)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; err =&gt; &#123;</span><br><span class="line">        resultArr[i] = err</span><br><span class="line">        index ++</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(index == <span class="title class_">PromiseArr</span>.<span class="property">length</span>) &#123;</span><br><span class="line">          <span class="title function_">resolve</span>(resultArr)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/22/%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/06/22/%E6%95%B0%E7%BB%84%E6%96%B9%E6%B3%95/" itemprop="url">数组方法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-22T13:47:24+08:00">
+                2024-06-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <ol>
+<li>push pop shift unshift  添加方法返回新长度 删除的方法返回删除元素</li>
+<li>concat slice splice join</li>
+<li>indexOf lastIndexOf 返回找到的索引，没找到返回-1</li>
+<li>sort reverse</li>
+<li>forEach</li>
+<li>filter map 返回新数组</li>
+<li>reduce 返回累计值</li>
+<li>some every includes 布尔值</li>
+<li>find 返回满足要求的第一个元素，没有就undefined</li>
+<li>Array.isArray</li>
 </ol>
-<h3 id="渲染进程"><a href="#渲染进程" class="headerlink" title="渲染进程"></a>渲染进程</h3><p>GUI 和 js 互斥</p>
-<ul>
-<li>GUI 渲染线程</li>
-<li>js 引擎线程</li>
-<li>定时器 线程</li>
-<li>异步 http 请求线程：处理回调函数</li>
-<li>WebWorker 多线程</li>
-</ul>
-<h2 id="1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程"><a href="#1-浏览器检查是-url-还是搜索关键词，是-url-则下一步交给网络进程" class="headerlink" title="1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程"></a>1. 浏览器检查是 url 还是搜索关键词，是 url 则下一步交给网络进程</h2><h2 id="2-发起请求，查询缓存（协商缓存，强缓存）"><a href="#2-发起请求，查询缓存（协商缓存，强缓存）" class="headerlink" title="2. 发起请求，查询缓存（协商缓存，强缓存）"></a>2. 发起请求，查询缓存（协商缓存，强缓存）</h2><h3 id="强缓存：直接使用本地缓存支援，关心是否在有效期内"><a href="#强缓存：直接使用本地缓存支援，关心是否在有效期内" class="headerlink" title="强缓存：直接使用本地缓存支援，关心是否在有效期内"></a><strong>强缓存</strong>：直接使用本地缓存支援，关心<strong>是否在有效期内</strong></h3><p>从本地缓存中查找也是需要发起请求，如果命中缓存则返回 200状态码和资源</p>
-<h4 id="缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache"><a href="#缓存位置优先级：Service-Worker-Memory-Cache-Disk-Cache-Push-Cache" class="headerlink" title="缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache"></a>缓存位置优先级：Service Worker &gt; Memory Cache &gt; Disk Cache &gt; Push Cache</h4><ul>
-<li><em>Serviec Worker</em>：独立线程</li>
-<li><em>Memory Cache</em>：内存缓存（短期），忽略缓存控制头，直接读取，若禁止缓存则需要 <code>Cache-Control: no-store</code>。缓存资源有：通过 preloader 加载的资源并行预加载；preload 指令标记的资源。</li>
-<li><em>Disk Cache</em>：硬盘缓存（持久）</li>
-<li><em>Push Cache</em>：推送缓存，只在会话中存在</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/26/%E8%BE%93%E5%85%A5url%E5%88%B0%E9%A1%B5%E9%9D%A2%E6%B8%B2%E6%9F%93/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/" itemprop="url">原型和原型链</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T12:09:16+08:00">
-                2024-02-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>每一个实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性；<br>每一个构造函数（包括 <code>Object</code> 函数）都是是 <code>Function</code> 函数的实例函数，所以每个构造函数上有 <code>__proto__</code> 属性，指向 <code>Function</code> 函数的 <code>prototype</code> 属性；<br>每一个 <code>prototype</code> 属性默认是一个空对象，是 <code>Object</code> 函数的实例函数，所以 <code>prototype</code> 属性上有 <code>__proto__</code> 属性，指向 <code>Object</code> 函数的 <code>prototype</code> 属性；<br><code>Object</code> 的 <code>prototype</code> 属性的 <code>__proto__</code> 属性指向 <code>null</code> 是原型链的终点。</p>
+<h3 id="filter-element-index-array"><a href="#filter-element-index-array" class="headerlink" title="filter(element, index, array)"></a>filter(element, index, array)</h3><p>过滤掉符合条件的数组，返回一个新数组</p>
+<h3 id="reduce-sum-curValue-index-array"><a href="#reduce-sum-curValue-index-array" class="headerlink" title="reduce((sum, curValue, index, array))"></a>reduce((sum, curValue, index, array))</h3><p>累加器，返回sum</p>
+<h3 id="map"><a href="#map" class="headerlink" title="map"></a>map</h3><p>对数组每个元素进行处理，返回新值的数组</p>
+<h3 id="不遍历取最大值"><a href="#不遍历取最大值" class="headerlink" title="不遍历取最大值"></a>不遍历取最大值</h3><ol>
+<li>sort </li>
+<li>Math.max(…arr)</li>
+</ol>
 
           
         
@@ -939,7 +903,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/22/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -958,7 +922,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/26/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D/" itemprop="url">浅拷贝与深拷贝</a></h1>
+                <a class="post-title-link" href="/2024/06/22/%E6%95%B0%E7%BB%84%E5%8E%BB%E9%87%8D/" itemprop="url">数组去重</a></h1>
         
 
         <div class="post-meta">
@@ -970,8 +934,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-26T11:49:28+08:00">
-                2024-02-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-22T13:37:42+08:00">
+                2024-06-22
               </time>
             
 
@@ -1010,10 +974,19 @@
       
         
           
-            <h2 id="赋值"><a href="#赋值" class="headerlink" title="赋值"></a>赋值</h2><p>对于引用类型数据来说，赋值是复制引用类型数据的堆内存地址</p>
-<h2 id="浅拷贝"><a href="#浅拷贝" class="headerlink" title="浅拷贝"></a>浅拷贝</h2><p>对于引用类型数据来说，浅拷贝是创建一个新的对象，对第一层属性进行拷贝，若有深层的引用类型数据，则还是指向同一内存地址，如 拓展运算符，slice，concat，assign</p>
-<h2 id="深拷贝"><a href="#深拷贝" class="headerlink" title="深拷贝"></a>深拷贝</h2><p>对于引用类型数据来说，深拷贝就是让两个引用类型数据完全独立，递归进行浅拷贝，深层的引用类型数据也指向不同内存地址，但是属性进行精确拷贝，如 _.cloneDeep, jQuery.extend, JSON.stringify（会忽略 undefined, symbol, function）</p>
-<h3 id="手写深拷贝"><a href="#手写深拷贝" class="headerlink" title="手写深拷贝"></a>手写深拷贝</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">cloneDeep</span> (obj, hash = <span class="keyword">new</span> <span class="title class_">WeekMap</span>()) &#123;</span><br><span class="line">  <span class="keyword">if</span>(obj == <span class="literal">null</span>) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">RegExp</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">RegExp</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Date</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Date</span>(obj)</span><br><span class="line">  <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> <span class="title class_">Function</span>) <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Function</span> (<span class="string">&#x27;return&#x27;</span> + obj.<span class="title function_">toString</span>())()</span><br><span class="line">  <span class="keyword">if</span>(!(<span class="keyword">typeof</span> obj === <span class="string">&#x27;object&#x27;</span>)) <span class="keyword">return</span> obj</span><br><span class="line">  <span class="keyword">if</span>(hash.<span class="title function_">get</span>(obj)) <span class="keyword">return</span> hash.<span class="title function_">get</span>(obj)</span><br><span class="line">  <span class="keyword">let</span> cloneObj = <span class="keyword">new</span> obj.<span class="title function_">constructor</span>(<span class="params"></span>)</span><br><span class="line">  hash.<span class="title function_">set</span>(obj,cloneObj)</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> key <span class="keyword">in</span> obj) &#123;</span><br><span class="line">    <span class="keyword">if</span>(obj.<span class="title function_">hasOwnProperty</span>(key)) &#123;</span><br><span class="line">      cloneObj[key] = <span class="title function_">cloneDeep</span>(obj[key],hash)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> cloneObj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>Set</li>
+<li>找相同：includes，map，indexOf</li>
+<li>for x循环嵌套，splice</li>
+</ol>
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title class_">Array</span>.<span class="title function_">from</span>(<span class="keyword">new</span> <span class="title class_">Set</span>(arr)) / [...<span class="keyword">new</span> <span class="title class_">Set</span>(arr)]</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建新数组，找相同"><a href="#创建新数组，找相同" class="headerlink" title="创建新数组，找相同"></a>创建新数组，找相同</h2><ol>
+<li>includes</li>
+<li>indexOf</li>
+<li>Map</li>
+</ol>
+<h2 id="for循环嵌套，splice"><a href="#for循环嵌套，splice" class="headerlink" title="for循环嵌套，splice"></a>for循环嵌套，splice</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span> ;i&lt;arr.<span class="property">length</span>;i++) &#123;</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">let</span> j = i;j&lt;arr.<span class="property">length</span>;j++) &#123;</span><br><span class="line">    <span class="keyword">if</span>(arr[i] == arr[j]) &#123;</span><br><span class="line">      arr.<span class="title function_">splice</span>(j,<span class="number">1</span>)</span><br><span class="line">      j--;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
           
         
@@ -1062,7 +1035,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/22/http%E5%92%8Chttps%E7%9A%84%E5%8C%BA%E5%88%AB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1081,7 +1054,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/" itemprop="url">Vue3源码：reactive</a></h1>
+                <a class="post-title-link" href="/2024/06/22/http%E5%92%8Chttps%E7%9A%84%E5%8C%BA%E5%88%AB/" itemprop="url">http和https的区别</a></h1>
         
 
         <div class="post-meta">
@@ -1093,133 +1066,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T17:11:47+08:00">
-                2024-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>reactive 就是根据不同的对象类型(rawType -&gt; TargetType)，使用不同的处理器 handler，不同处理器里有一一对应的操作方法，将对象进行 Proxy 代理，并记录到 reactiveMap 中，返回代理对象;<br>Proxy 对应拦截操作的核心 api 是 Refelct 对应的方法，使用 Reflect 的原因是 receiver 参数使触发对象劫持时保证正确的 this 指向</p>
-<h2 id="reactive-源码"><a href="#reactive-源码" class="headerlink" title="reactive 源码"></a>reactive 源码</h2>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2024/02/25/Vue3%E6%BA%90%E7%A0%81%EF%BC%9Areactive/#more" rel="contents">
-              Read the rest here &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/" itemprop="url">前端攻击</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T17:00:51+08:00">
-                2024-02-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-22T00:15:52+08:00">
+                2024-06-22
               </time>
             
 
@@ -1258,185 +1106,19 @@
       
         
           
-            <h2 id="CSRF-跨站请求伪造"><a href="#CSRF-跨站请求伪造" class="headerlink" title="CSRF 跨站请求伪造"></a>CSRF 跨站请求伪造</h2><p>跨站：在被攻击网站上获得了 cookie，诱导进入第三方</p>
-<p>请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作</p>
-<p>类型：get，post，链接</p>
-<h2 id="XSS-跨站脚本攻击"><a href="#XSS-跨站脚本攻击" class="headerlink" title="XSS 跨站脚本攻击"></a>XSS 跨站脚本攻击</h2><ul>
-<li>存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行</li>
-<li>反射型：恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回，</li>
-<li>Dom 型：url 前端执行请求的路径</li>
-</ul>
-<p>预防：防止攻击者提交恶意代码</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/Css/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="义依雯的博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2024/02/25/Css/" itemprop="url">CSS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T15:29:20+08:00">
-                2024-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/CSS/" itemprop="url" rel="index">
-                    <span itemprop="name">CSS</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="flex"><a href="#flex" class="headerlink" title="flex"></a>flex</h2><p>MDN：<a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/CSS/flex" title="flex">flex的解释</a></p>
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>https 是 http + ssl 层</li>
+<li>数据完整性：摘要算法</li>
+<li>数据保密性：非对称加密，公钥加密，私钥解密，不需要传输密钥，安全性增加（对称加密需要传递密钥）</li>
+<li>身份校验安全性：数字签名（私钥加密，公钥解密，确保消息来源可信）和数字证书（确保公钥可信）</li>
+</ol>
+<p>https 握手</p>
 <ol>
-<li>flex-grow 当容器还有剩余空间放大的比例</li>
-<li>flex-shrink 当容器没有剩余空间缩小的比例</li>
-<li>flex-basis 默认大小，以上两个是通过此值来计算是否放大或缩小的</li>
-<li><strong>flex: [flex-grow] [flex-shrink] [flex-basis]</strong> 原始值：flex:0 1 auto</li>
-<li>flex-direction 主轴方向 row-行 col-列</li>
-<li>flex-wrap 指定单行显示还是多行显示</li>
-<li><strong>flex-flow: [flex-direction] [flex-wrap]</strong></li>
+<li>浏览器：协议版本加密算法，压缩算法，随机数1</li>
+<li>服务端：确定协议版本，加密算法，数字证书，公钥，随机数2</li>
+<li>浏览器：验证证书，预主密钥，3个随机数组装会话密钥，用公钥加密预主密钥传过去</li>
+<li>服务端：用私钥解密预主密钥，3个随机数组装会话密钥，会话密钥协商成功，双方用同一份会话密钥通信</li>
 </ol>
-<h2 id="position"><a href="#position" class="headerlink" title="position"></a>position</h2><ol>
-<li>static 正常</li>
-<li>relative 原始位置用空白占位，对于原始位置的偏移</li>
-<li>absolute 移出正常文档流，对最近的非 static 的祖先元素的右上角点的定位</li>
-<li>fixed 移出正常文档流，对屏幕视口的定位，滚动时不会改变，当元素祖先的 transform、perspective、filter 或 backdrop-filter 属性非 none 时，容器由视口改为该祖先。</li>
-<li>sticky</li>
-</ol>
-<h2 id="形状"><a href="#形状" class="headerlink" title="形状"></a>形状</h2><ol>
-<li>椭圆：长方形 + border-radius: 50% ; border-radius: 水平 &#x2F; 垂直；border-radius: 左上 右上 右下 左下</li>
-<li>平行四边形：transform: skewX(-45deg)</li>
-<li>菱形：transfrom: rotate(45deg); clip-path: polygon(50% 0, 100% 50%,50% 100%, 0 50%)</li>
-<li>切角：渐变{background: linear-gradient(-45deg, transparent 15px,)}</li>
-<li>梯形：3D模拟{transform: perspective(.5em) rorateX(5deg)}</li>
-</ol>
-<h2 id="行内元素-inline-，块级元素-block-，行内块元素-inline-block"><a href="#行内元素-inline-，块级元素-block-，行内块元素-inline-block" class="headerlink" title="行内元素(inline)，块级元素(block)，行内块元素(inline-block)"></a>行内元素(inline)，块级元素(block)，行内块元素(inline-block)</h2><p>区别：一是排列方式，二是宽高边距设置，三是默认宽度。</p>
-<ul>
-<li>行内元素：1.高度无效，padding，margin上下无效，行高 line-height 有效; 2.宽度无效，随内容而变化</li>
-<li>行内块元素: 一行中放置多个，宽度随内容，高度可设置</li>
-</ul>
 
           
         
@@ -1485,7 +1167,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/02/25/%E8%B7%A8%E5%9F%9F/">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/21/CSS%E9%80%89%E6%8B%A9%E5%99%A8/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -1504,7 +1186,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2024/02/25/%E8%B7%A8%E5%9F%9F/" itemprop="url">跨域</a></h1>
+                <a class="post-title-link" href="/2024/06/21/CSS%E9%80%89%E6%8B%A9%E5%99%A8/" itemprop="url">CSS选择器</a></h1>
         
 
         <div class="post-meta">
@@ -1516,8 +1198,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-02-25T14:43:00+08:00">
-                2024-02-25
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-21T23:33:58+08:00">
+                2024-06-21
               </time>
             
 
@@ -1556,18 +1238,318 @@
       
         
           
-            <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>浏览器同源策略：同协议，域名，端口的资源<br>限制：</p>
+            <h2 id="优先级"><a href="#优先级" class="headerlink" title="优先级"></a>优先级</h2><p>!important &gt; 内联 &gt; #ID &gt; .类别 class &gt; 属性[] &gt; 伪类 &gt; 元素 &gt; 伪元素 &gt; 通配符 * &gt; 继承</p>
+<h2 id="选择器语法"><a href="#选择器语法" class="headerlink" title="选择器语法"></a>选择器语法</h2><ol>
+<li>选择器1选择器2：没有空格，交集</li>
+<li>之间, 并集</li>
+</ol>
+<h2 id="属性选择器"><a href="#属性选择器" class="headerlink" title="属性选择器"></a>属性选择器</h2><ol>
+<li>[属性&#x3D;属性值]</li>
+<li>[属性^&#x3D;属性值] 开头</li>
+<li>[属性$&#x3D;属性值] 结尾</li>
+<li>[属性*&#x3D;属性值] 包含</li>
+</ol>
+<h2 id="关系选择器"><a href="#关系选择器" class="headerlink" title="关系选择器"></a>关系选择器</h2><ol>
+<li>父&gt; 第一代子元素</li>
+<li>空格 祖先 后代</li>
+<li>兄 + 第一个弟，紧跟在兄后的元素的弟</li>
+<li>兄 - 所有弟</li>
+</ol>
+<h2 id="伪类"><a href="#伪类" class="headerlink" title="伪类"></a>伪类</h2><p>动态的类</p>
 <ol>
-<li>无法操作彼此的 DOM 元素</li>
-<li>无法共享缓存，如 cookie 和 localstorage</li>
+<li>:link 链接没有被访问过</li>
+<li>:visited</li>
+<li>:hover</li>
+<li>:active 点击</li>
+<li>:focus</li>
+<li>:first-child 第一个子元素 :last-child</li>
+<li>:nth-child ?????</li>
+<li>:nth-last-child</li>
+<li>:nth-of-child</li>
+<li>:first-of-type 父元素的第一个同类型的子元素 :last-of-type</li>
+<li>:only-child 唯一一个子元素</li>
+<li>:only-of-type</li>
+<li>:empty 没有任何内容的元素</li>
+<li>:not 过滤</li>
+<li>:enabled :disabled :checked 可选中</li>
 </ol>
-<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><ol>
-<li>定义回调函数名称 fn</li>
-<li>通过 script 标签的 src 属性请求接口数据 （script 标签不熟浏览器同源策略影响），指定回调函数为 fn，客户端将数据封装到 fn 函数调用后返回。</li>
+<h2 id="伪元素"><a href="#伪元素" class="headerlink" title="伪元素"></a>伪元素</h2><p>创建一些不在DOM树中的元素，querySelector无法获取</p>
+<ol>
+<li>::before</li>
+<li>::after</li>
+<li>::first-line 用于块级元素 第一行</li>
+<li>::first-letter 用于块级元素 第一个字母</li>
+<li>::selection 鼠标框选的内容</li>
 </ol>
-<h2 id="CORS"><a href="#CORS" class="headerlink" title="CORS"></a>CORS</h2><p>设置 Access-Control-Allow-Origin 字段允许前端访问</p>
-<h2 id="nginx-反向代理"><a href="#nginx-反向代理" class="headerlink" title="nginx 反向代理"></a>nginx 反向代理</h2><p>正向代理：访问方主动设置，访问方知道，隐藏了真实的客户端<br>反向代理：被访问方设置的，访问方无感知，隐藏了真实的服务器</p>
-<p>反向代理有负载均衡的好处，同时将对真实服务器的请求反向代理到本机服务器，从而避免浏览器“同源策略限制”</p>
+<p>伪元素的要点：</p>
+<ol>
+<li>window.getComputedStyle(element, ‘:before’) 能获取到伪元素的css对象</li>
+<li>默认 display:inline, 所以无法自定义宽高，可以设置 display: block&#x2F; inline-block</li>
+</ol>
+<p>伪元素的修改：</p>
+<ol>
+<li>使用 class 修改，removeClass，addClass</li>
+<li>插入css规则，使用 document.styleSheet[0].insertRule(‘div::before {}’,index) 或 let style &#x3D; document.createElement(“style”), style.insertRule, document.head.appendChild(style)</li>
+<li>attr()，应用Dom元素的data属性，dom元素设置 data-key&#x3D;value，用 element.dataset.key 修改</li>
+</ol>
+<h2 id="getPropertyValue-和直接用键值访问css属性的区别"><a href="#getPropertyValue-和直接用键值访问css属性的区别" class="headerlink" title="getPropertyValue 和直接用键值访问css属性的区别"></a>getPropertyValue 和直接用键值访问css属性的区别</h2><ol>
+<li>float属性：键为 cssFloat 和 styleFloat</li>
+<li>键值访问：驼峰写法</li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/21/http%E7%89%88%E6%9C%AC/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/06/21/http%E7%89%88%E6%9C%AC/" itemprop="url">http版本</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-21T23:16:27+08:00">
+                2024-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="http-0-9"><a href="#http-0-9" class="headerlink" title="http 0.9"></a>http 0.9</h2><p>无响应头，请求头，只有GET</p>
+<h2 id="http-1-0"><a href="#http-1-0" class="headerlink" title="http 1.0"></a>http 1.0</h2><p>有响应头，有请求头，多种请求方法</p>
+<h2 id="http-1-1"><a href="#http-1-1" class="headerlink" title="http 1.1"></a>http 1.1</h2><h3 id="持久连接"><a href="#持久连接" class="headerlink" title="持久连接"></a>持久连接</h3><p>一个TCP连接上可以发送多个请求和响应</p>
+<h3 id="管线化"><a href="#管线化" class="headerlink" title="管线化"></a>管线化</h3><p>一个TCP连接上可以连续发送多个请求和响应<br>发送请求不必等待上一个请求的响应，但是需要按序发送响应，队头阻塞</p>
+<h3 id="分块传输编码"><a href="#分块传输编码" class="headerlink" title="分块传输编码"></a>分块传输编码</h3><p>可以在不知道响应数据的完整长度的时候，分块逐步发送，而不必等待响应完全加载。<br>适用于在意外网络中断前，尽可能多地响应数据</p>
+<h2 id="http-2-0"><a href="#http-2-0" class="headerlink" title="http 2.0"></a>http 2.0</h2><h3 id="多路复用"><a href="#多路复用" class="headerlink" title="多路复用"></a>多路复用</h3><p>在一个TCP连接上，复用多个数据流</p>
+<p>乱序发送响应，解决管线化的对头阻塞</p>
+<h3 id="二进制分帧"><a href="#二进制分帧" class="headerlink" title="二进制分帧"></a>二进制分帧</h3><p>提高传输效率，加密算法升级，更安全<br>分成一个小小的二进制帧，帧头信息标志，头部压缩</p>
+<h3 id="服务器推送"><a href="#服务器推送" class="headerlink" title="服务器推送"></a>服务器推送</h3><p>服务器可以把客户端可能需要的数据一起响应回去，但也可能造成不必要的响应</p>
+<h2 id="http-3-0"><a href="#http-3-0" class="headerlink" title="http 3.0"></a>http 3.0</h2><p>基于UDP 的 QUIC协议</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yi1wen.github.io/2024/06/18/%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="义依雯的博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2024/06/18/%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%BC%8F/" itemprop="url">路由模式</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2024-06-18T20:39:25+08:00">
+                2024-06-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>hash 模式</li>
+<li>history 模式</li>
+</ol>
+<h3 id="hash-模式"><a href="#hash-模式" class="headerlink" title="hash 模式"></a>hash 模式</h3><p>‘#’号后面的字符串，不会重新加载页面，会触发 hashchange事件，获取hash值来修改页面路由<br>hash值改变，不会重新加载页面，而是在栈结构中添加和移除数据，实现回退和前进，并切换</p>
+<h2 id="history-模式"><a href="#history-模式" class="headerlink" title="history 模式"></a>history 模式</h2><p>hash值改变，对服务器发送请求，原理：pushstate，replacestate</p>
 
           
         
@@ -1607,7 +1589,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
   </nav>
 
 
@@ -1653,7 +1635,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

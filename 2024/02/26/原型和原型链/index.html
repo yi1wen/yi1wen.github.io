@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="每一个实例函数的 __proto__ 属性指向构造函数的 prototype 属性；每一个构造函数（包括 Object 函数）都是是 Function 函数的实例函数，所以每个构造函数上有 __proto__ 属性，指向 Function 函数的 prototype 属性；每一个 prototype 属性默认是一个空对象，是 Object 函数的实例函数，所以 prototype 属性上有 __p">
+<meta name="description" content="原型原型是一个对象，存储公共的属性和方法，来辅助实现js中继承的机制 原型对象和构造函数构造函数的prototype属性指向原型对象，原型对象有一个constructor属性，指向构造函数 原型链每一个实例函数的 __proto__ 属性指向构造函数的 prototype 属性；每一个构造函数（包括 Object 函数）都是是 Function 函数的实例函数，所以每个构造函数上有 __proto">
 <meta property="og:type" content="article">
 <meta property="og:title" content="原型和原型链">
 <meta property="og:url" content="http://yi1wen.github.io/2024/02/26/%E5%8E%9F%E5%9E%8B%E5%92%8C%E5%8E%9F%E5%9E%8B%E9%93%BE/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="每一个实例函数的 __proto__ 属性指向构造函数的 prototype 属性；每一个构造函数（包括 Object 函数）都是是 Function 函数的实例函数，所以每个构造函数上有 __proto__ 属性，指向 Function 函数的 prototype 属性；每一个 prototype 属性默认是一个空对象，是 Object 函数的实例函数，所以 prototype 属性上有 __p">
+<meta property="og:description" content="原型原型是一个对象，存储公共的属性和方法，来辅助实现js中继承的机制 原型对象和构造函数构造函数的prototype属性指向原型对象，原型对象有一个constructor属性，指向构造函数 原型链每一个实例函数的 __proto__ 属性指向构造函数的 prototype 属性；每一个构造函数（包括 Object 函数）都是是 Function 函数的实例函数，所以每个构造函数上有 __proto">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-26T04:09:16.000Z">
-<meta property="article:modified_time" content="2024-02-26T04:16:48.000Z">
+<meta property="article:modified_time" content="2024-06-18T03:36:00.000Z">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
 
@@ -319,7 +319,16 @@
       
 
       
-        <p>每一个实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性；<br>每一个构造函数（包括 <code>Object</code> 函数）都是是 <code>Function</code> 函数的实例函数，所以每个构造函数上有 <code>__proto__</code> 属性，指向 <code>Function</code> 函数的 <code>prototype</code> 属性；<br>每一个 <code>prototype</code> 属性默认是一个空对象，是 <code>Object</code> 函数的实例函数，所以 <code>prototype</code> 属性上有 <code>__proto__</code> 属性，指向 <code>Object</code> 函数的 <code>prototype</code> 属性；<br><code>Object</code> 的 <code>prototype</code> 属性的 <code>__proto__</code> 属性指向 <code>null</code> 是原型链的终点。</p>
+        <h3 id="原型"><a href="#原型" class="headerlink" title="原型"></a>原型</h3><p>原型是一个对象，存储公共的属性和方法，来辅助实现js中继承的机制</p>
+<h3 id="原型对象和构造函数"><a href="#原型对象和构造函数" class="headerlink" title="原型对象和构造函数"></a>原型对象和构造函数</h3><p>构造函数的<code>prototype</code>属性指向原型对象，原型对象有一个<code>constructor</code>属性，指向构造函数</p>
+<h3 id="原型链"><a href="#原型链" class="headerlink" title="原型链"></a>原型链</h3><p>每一个实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性；<br>每一个构造函数（包括 <code>Object</code> 函数）都是是 <code>Function</code> 函数的实例函数，所以每个构造函数上有 <code>__proto__</code> 属性，指向 <code>Function</code> 函数的 <code>prototype</code> 属性；<br>每一个 <code>prototype</code> 属性默认是一个空对象，是 <code>Object</code> 函数的实例函数，所以 <code>prototype</code> 属性上有 <code>__proto__</code> 属性，指向 <code>Object</code> 函数的 <code>prototype</code> 属性；<br><code>Object</code> 的 <code>prototype</code> 属性的 <code>__proto__</code> 属性指向 <code>null</code> 是原型链的终点。</p>
+<h3 id="new-一个实例对象时发生了什么"><a href="#new-一个实例对象时发生了什么" class="headerlink" title="new 一个实例对象时发生了什么"></a>new 一个实例对象时发生了什么</h3><ol>
+<li>创建一个新对象</li>
+<li>将实例函数的 <code>__proto__</code> 属性指向构造函数的 <code>prototype</code> 属性</li>
+<li>构造函数this值绑定为新对象，执行构造函数的代码，目的是为新对象添加实例属性和方法</li>
+<li>返回新对象</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">newobj</span> (func,...args)&#123;</span><br><span class="line">    <span class="keyword">let</span> obj = &#123;&#125;</span><br><span class="line">    obj.<span class="property">__proto__</span> = func.<span class="property"><span class="keyword">prototype</span></span></span><br><span class="line">    <span class="keyword">let</span> result = func.<span class="title function_">apply</span>(obj,args)</span><br><span class="line">    <span class="keyword">return</span> result <span class="keyword">instanceof</span> <span class="title class_">Object</span> ?  result : obj</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -408,8 +417,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -424,7 +442,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -485,6 +503,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B"><span class="nav-number">1.</span> <span class="nav-text">原型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1%E5%92%8C%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">2.</span> <span class="nav-text">原型对象和构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E5%9E%8B%E9%93%BE"><span class="nav-number">3.</span> <span class="nav-text">原型链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#new-%E4%B8%80%E4%B8%AA%E5%AE%9E%E4%BE%8B%E5%AF%B9%E8%B1%A1%E6%97%B6%E5%8F%91%E7%94%9F%E4%BA%86%E4%BB%80%E4%B9%88"><span class="nav-number">4.</span> <span class="nav-text">new 一个实例对象时发生了什么</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

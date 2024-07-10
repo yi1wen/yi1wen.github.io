@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="CSRF 跨站请求伪造跨站：在被攻击网站上获得了 cookie，诱导进入第三方 请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作 类型：get，post，链接 XSS 跨站脚本攻击 存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行 反射型：恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回， Dom 型：url 前端执行请求的路径  预防：防止">
+<meta name="description" content="CSRF(cross-site request forgery) 跨站请求伪造[https:&#x2F;&#x2F;tech.meituan.com&#x2F;2018&#x2F;10&#x2F;11&#x2F;fe-security-csrf.html][https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_43378996&#x2F;article&#x2F;details&#x2F;123910614]  登录受信任网站A，并在本地生成Cookie。 在不登出A的情况下，访问危险网站">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端攻击">
 <meta property="og:url" content="http://yi1wen.github.io/2024/02/25/%E5%89%8D%E7%AB%AF%E6%94%BB%E5%87%BB/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="CSRF 跨站请求伪造跨站：在被攻击网站上获得了 cookie，诱导进入第三方 请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作 类型：get，post，链接 XSS 跨站脚本攻击 存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行 反射型：恶意代码拼接在 url 上，服务器提取拼接在 HTML 上返回， Dom 型：url 前端执行请求的路径  预防：防止">
+<meta property="og:description" content="CSRF(cross-site request forgery) 跨站请求伪造[https:&#x2F;&#x2F;tech.meituan.com&#x2F;2018&#x2F;10&#x2F;11&#x2F;fe-security-csrf.html][https:&#x2F;&#x2F;blog.csdn.net&#x2F;qq_43378996&#x2F;article&#x2F;details&#x2F;123910614]  登录受信任网站A，并在本地生成Cookie。 在不登出A的情况下，访问危险网站">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-25T09:00:51.000Z">
-<meta property="article:modified_time" content="2024-03-20T02:05:38.000Z">
+<meta property="article:modified_time" content="2024-06-23T15:20:20.000Z">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
 
@@ -319,8 +319,12 @@
       
 
       
-        <h2 id="CSRF-跨站请求伪造"><a href="#CSRF-跨站请求伪造" class="headerlink" title="CSRF 跨站请求伪造"></a>CSRF 跨站请求伪造</h2><p>跨站：在被攻击网站上获得了 cookie，诱导进入第三方</p>
-<p>请求伪造：利用用户已经在被攻击网站上获得的 cookie，冒充用户执行操作</p>
+        <h2 id="CSRF-cross-site-request-forgery-跨站请求伪造"><a href="#CSRF-cross-site-request-forgery-跨站请求伪造" class="headerlink" title="CSRF(cross-site request forgery) 跨站请求伪造"></a>CSRF(cross-site request forgery) 跨站请求伪造</h2><p>[<a target="_blank" rel="noopener" href="https://tech.meituan.com/2018/10/11/fe-security-csrf.html]">https://tech.meituan.com/2018/10/11/fe-security-csrf.html]</a><br>[<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43378996/article/details/123910614]">https://blog.csdn.net/qq_43378996/article/details/123910614]</a></p>
+<ol>
+<li>登录受信任网站A，并在本地生成Cookie。</li>
+<li>在不登出A的情况下，访问危险网站B。</li>
+<li>通过危险网站B中的连接中访问A</li>
+</ol>
 <p>类型：get，post，链接</p>
 <h2 id="XSS-跨站脚本攻击"><a href="#XSS-跨站脚本攻击" class="headerlink" title="XSS 跨站脚本攻击"></a>XSS 跨站脚本攻击</h2><ul>
 <li>存储型：恶意代码存储在服务器中，用户收到响应中包含恶意代码并执行</li>
@@ -441,7 +445,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -512,7 +516,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF-%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="nav-number">1.</span> <span class="nav-text">CSRF 跨站请求伪造</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB"><span class="nav-number">2.</span> <span class="nav-text">XSS 跨站脚本攻击</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#CSRF-cross-site-request-forgery-%E8%B7%A8%E7%AB%99%E8%AF%B7%E6%B1%82%E4%BC%AA%E9%80%A0"><span class="nav-number">1.</span> <span class="nav-text">CSRF(cross-site request forgery) 跨站请求伪造</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#XSS-%E8%B7%A8%E7%AB%99%E8%84%9A%E6%9C%AC%E6%94%BB%E5%87%BB"><span class="nav-number">2.</span> <span class="nav-text">XSS 跨站脚本攻击</span></a></li></ol></div>
             
 
           </div>

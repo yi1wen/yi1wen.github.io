@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="总结解决了什么问题：命名冲突，依赖管理  Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认 ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认 AMD：异步形式加载，回调适用defined UMD：结合 Commonjs 和 AMD">
+<meta name="description" content="总结解决了什么问题：命名冲突，依赖管理  Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认，同步导入， ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认，异步导入 AMD：异步形式加载，回调适用defined UMD：结合 Commonjs 和 AMD">
 <meta property="og:type" content="article">
 <meta property="og:title" content="前端模块化">
 <meta property="og:url" content="http://yi1wen.github.io/2024/02/28/%E5%89%8D%E7%AB%AF%E6%A8%A1%E5%9D%97%E5%8C%96/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="总结解决了什么问题：命名冲突，依赖管理  Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认 ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认 AMD：异步形式加载，回调适用defined UMD：结合 Commonjs 和 AMD">
+<meta property="og:description" content="总结解决了什么问题：命名冲突，依赖管理  Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认，同步导入， ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认，异步导入 AMD：异步形式加载，回调适用defined UMD：结合 Commonjs 和 AMD">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-28T04:20:16.000Z">
-<meta property="article:modified_time" content="2024-02-28T05:36:12.000Z">
+<meta property="article:modified_time" content="2024-07-10T02:34:42.000Z">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
 
@@ -321,8 +321,8 @@
       
         <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>解决了什么问题：命名冲突，依赖管理</p>
 <ol>
-<li>Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认</li>
-<li>ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认</li>
+<li>Commonjs：module.export 导出 require 导入（可放表达式）；值的拷贝（内不影响外，外可改变）；动态依赖，运行确认，同步导入，</li>
+<li>ESModel：export 导出 import 导入；只读引用；命名导出，默认导出；静态依赖，编译确认，异步导入</li>
 <li>AMD：异步形式加载，回调适用defined</li>
 <li>UMD：结合 Commonjs 和 AMD</li>
 </ol>
@@ -439,7 +439,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

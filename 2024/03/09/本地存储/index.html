@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="总结 localStorage sessionStorage indexedDB  sessionStorage 刷新 sessionStorage 仍然存在 从一个页面打开一个新页面，新页面会复制（深拷贝）上一个页面的 sessionStorage 打开相同 URL 的不同窗口页面，会创建各自的 sessionStorage  indexedDB异步存储">
+<meta name="description" content="总结 Pinia和Vuex存储在内存中，响应式 localStorage sessionStorage indexedDB localForage  localStorage同源可以共享，5M 如何实现 localStorage 的响应式 vuex-persistedstate 插件，默认将 localStorage 当成仓库， sessionStorage 也行 如果使用 Vuex ， 则用 t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="本地存储">
 <meta property="og:url" content="http://yi1wen.github.io/2024/03/09/%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="总结 localStorage sessionStorage indexedDB  sessionStorage 刷新 sessionStorage 仍然存在 从一个页面打开一个新页面，新页面会复制（深拷贝）上一个页面的 sessionStorage 打开相同 URL 的不同窗口页面，会创建各自的 sessionStorage  indexedDB异步存储">
+<meta property="og:description" content="总结 Pinia和Vuex存储在内存中，响应式 localStorage sessionStorage indexedDB localForage  localStorage同源可以共享，5M 如何实现 localStorage 的响应式 vuex-persistedstate 插件，默认将 localStorage 当成仓库， sessionStorage 也行 如果使用 Vuex ， 则用 t">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-03-09T11:04:21.000Z">
-<meta property="article:modified_time" content="2024-03-09T11:31:12.000Z">
+<meta property="article:modified_time" content="2024-06-23T09:58:26.000Z">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
 
@@ -320,16 +320,40 @@
 
       
         <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ol>
+<li>Pinia和Vuex存储在内存中，响应式</li>
 <li>localStorage</li>
 <li>sessionStorage</li>
 <li>indexedDB</li>
+<li>localForage</li>
 </ol>
+<h3 id="localStorage"><a href="#localStorage" class="headerlink" title="localStorage"></a>localStorage</h3><p>同源可以共享，5M</p>
+<h4 id="如何实现-localStorage-的响应式"><a href="#如何实现-localStorage-的响应式" class="headerlink" title="如何实现 localStorage 的响应式"></a>如何实现 localStorage 的响应式</h4><ol>
+<li>vuex-persistedstate 插件，默认将 localStorage 当成仓库， sessionStorage 也行</li>
+<li>如果使用 Vuex ， 则用 this.$store.watch, 监听 Vuex 的属性值，在属性值改变的回调时，再设置进 localStorage</li>
+<li>重写 localStorage.getItem 方法实现响应式</li>
+</ol>
+<h4 id="重写-localStorage-getItem-方法实现响应式"><a href="#重写-localStorage-getItem-方法实现响应式" class="headerlink" title="重写 localStorage.getItem 方法实现响应式"></a>重写 localStorage.getItem 方法实现响应式</h4><p>实现效果：在某处 setItem 时， 在其他 getItem 处可以实现响应式获取最新的值</p>
+<p>localStorage 没有响应式是因为，不是对象，不会受 Proxy 代理，没有依赖收集，不会在 get 中收集依赖，在 set 中触发依赖</p>
+<p>Vue 响应式的核心是 将函数和数据关联起来，函数作为数据的依赖</p>
+<p>Vue 响应式依赖的数据结构是<br>WeakMap(key: 对象, value: 属性集合Map)<br><strong>Map(key: 属性, value: 依赖集合Set)</strong></p>
+<ol>
+<li>首先需要模拟 响应式依赖收集数据结构 属性集合Map <code>const storeItemSubscribers = &#123;&#125;;</code></li>
+<li>在 get 中收集依赖，在 set 中触发依赖，对应的是 get - getItem，set - setItem</li>
+</ol>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getItem = <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="property">getItem</span></span><br><span class="line"><span class="variable language_">localStorage</span>.<span class="property">getItem</span> = <span class="function">(<span class="params">key, fn</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span>(!storeItemSubscribers[key]) storeItemSubscribers[key] = <span class="keyword">new</span> <span class="title class_">Set</span>(); <span class="comment">// 创建一个依赖容器</span></span><br><span class="line">  <span class="comment">// 收集依赖</span></span><br><span class="line">  <span class="keyword">if</span>(fn) storeItemSubscribers[key].<span class="title function_">add</span>(fn)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> getItem.<span class="title function_">call</span>(<span class="variable language_">localStorage</span>, key)</span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="variable language_">localStorage</span>.<span class="property">setItem</span> = <span class="function">(<span class="params">key, value</span>) =&gt;</span> &#123;</span><br><span class="line">  setItem.<span class="title function_">call</span>(<span class="variable language_">localStorage</span>, key, value)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span>(storeItemSubscribers[key]) &#123;</span><br><span class="line">    storeItemSubscribers[key].<span class="title function_">forEach</span>(<span class="function">(<span class="params">fn</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="title function_">fn</span>();</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;</span><br><span class="line">&#125; </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>以下方式实现的效果，属性值与 组件 data里的属性值一致</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// A map between localStorage item keys and a list of Vue instances that depend on it</span></span><br><span class="line"><span class="keyword">const</span> storeItemSubscribers = &#123;&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// The Vue instance that is currently being initialised</span></span><br><span class="line"><span class="keyword">let</span> target = <span class="literal">undefined</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> getItem = <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="property">getItem</span>;</span><br><span class="line"><span class="variable language_">localStorage</span>.<span class="property">getItem</span> = <span class="function">(<span class="params">key</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&quot;Getting&quot;</span>, key);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Collect dependent Vue instance</span></span><br><span class="line">  <span class="keyword">if</span> (!storeItemSubscribers[key]) storeItemSubscribers[key] = [];</span><br><span class="line">  <span class="keyword">if</span> (target) storeItemSubscribers[key].<span class="title function_">push</span>(target);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Call the original function</span></span><br><span class="line">  <span class="keyword">return</span> getItem.<span class="title function_">call</span>(<span class="variable language_">localStorage</span>, key);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> setItem = <span class="variable language_">window</span>.<span class="property">localStorage</span>.<span class="property">setItem</span>;</span><br><span class="line"><span class="variable language_">localStorage</span>.<span class="property">setItem</span> = <span class="function">(<span class="params">key, value</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="variable language_">console</span>.<span class="title function_">info</span>(<span class="string">&quot;Setting&quot;</span>, key, value);</span><br><span class="line"></span><br><span class="line">  <span class="comment">// Update the value in the dependent Vue instances</span></span><br><span class="line">  <span class="keyword">if</span> (storeItemSubscribers[key]) &#123;</span><br><span class="line">    storeItemSubscribers[key].<span class="title function_">forEach</span>(<span class="function">(<span class="params">dep</span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (dep.<span class="title function_">hasOwnProperty</span>(key)) dep[key] = value;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Call the original function</span></span><br><span class="line">  setItem.<span class="title function_">call</span>(<span class="variable language_">localStorage</span>, key, value);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="title class_">Vue</span>.<span class="title function_">mixin</span>(&#123;</span><br><span class="line">  <span class="title function_">beforeCreate</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;beforeCreate&quot;</span>, <span class="variable language_">this</span>.<span class="property">_uid</span>);</span><br><span class="line">    target = <span class="variable language_">this</span>;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="title function_">created</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="variable language_">console</span>.<span class="title function_">log</span>(<span class="string">&quot;created&quot;</span>, <span class="variable language_">this</span>.<span class="property">_uid</span>);</span><br><span class="line">    target = <span class="literal">undefined</span>;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>总结：可以重写 localStorage 的 getItem 和 setItem 的 方法，先要模拟Vue响应式的数据结构，属性集合Map和依赖集合Set；然后将getItem中收集依赖，在setItem中触发依赖</p>
 <h3 id="sessionStorage"><a href="#sessionStorage" class="headerlink" title="sessionStorage"></a>sessionStorage</h3><ol>
-<li>刷新 sessionStorage 仍然存在</li>
+<li>刷新 sessionStorage 仍然存在，可以代替 Vuex</li>
 <li>从一个页面打开一个新页面，新页面会复制（深拷贝）上一个页面的 sessionStorage</li>
 <li>打开相同 URL 的不同窗口页面，会创建各自的 sessionStorage</li>
+<li>路由跳转再回退，sessionStorage 还在</li>
 </ol>
 <h3 id="indexedDB"><a href="#indexedDB" class="headerlink" title="indexedDB"></a>indexedDB</h3><p>异步存储</p>
+<h3 id="localForage"><a href="#localForage" class="headerlink" title="localForage"></a>localForage</h3><p>基于indexDB封装的库，易于学习，异步存储，容量大，存取对象或数组，不需要序列化</p>
 
       
     </div>
@@ -443,7 +467,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -514,7 +538,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionStorage"><span class="nav-number">1.1.</span> <span class="nav-text">sessionStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#indexedDB"><span class="nav-number">1.2.</span> <span class="nav-text">indexedDB</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#localStorage"><span class="nav-number">1.1.</span> <span class="nav-text">localStorage</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0-localStorage-%E7%9A%84%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="nav-number">1.1.1.</span> <span class="nav-text">如何实现 localStorage 的响应式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E5%86%99-localStorage-getItem-%E6%96%B9%E6%B3%95%E5%AE%9E%E7%8E%B0%E5%93%8D%E5%BA%94%E5%BC%8F"><span class="nav-number">1.1.2.</span> <span class="nav-text">重写 localStorage.getItem 方法实现响应式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sessionStorage"><span class="nav-number">1.2.</span> <span class="nav-text">sessionStorage</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#indexedDB"><span class="nav-number">1.3.</span> <span class="nav-text">indexedDB</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#localForage"><span class="nav-number">1.4.</span> <span class="nav-text">localForage</span></a></li></ol></li></ol></div>
             
 
           </div>

@@ -79,15 +79,15 @@
 
 
 
-<meta name="description" content="为什么浏览器同源策略：同协议，域名，端口的资源限制：  无法操作彼此的 DOM 元素 无法共享缓存，如 cookie 和 localstorage  JSONP 定义回调函数名称 fn 通过 script 标签的 src 属性请求接口数据 （script 标签不熟浏览器同源策略影响），指定回调函数为 fn，客户端将数据封装到 fn 函数调用后返回。  CORS设置 Access-Control-A">
+<meta name="description" content="解决什么问题同源策略是浏览器对JavaScript实施的安全限制，防止恶意的网站访问用户的敏感数据 是什么浏览器同源策略：同协议，域名，端口的资源  无法操作彼此的 DOM 元素 无法共享缓存，如 cookie 和 localstorage  JSONP用不受同源策略限制的 script 的 src， 来请求接口数据，指定回调，让客户端将数据作为回调参数封装，调用后返回  定义回调函数名称 fn">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跨域">
 <meta property="og:url" content="http://yi1wen.github.io/2024/02/25/%E8%B7%A8%E5%9F%9F/index.html">
 <meta property="og:site_name" content="义依雯的博客">
-<meta property="og:description" content="为什么浏览器同源策略：同协议，域名，端口的资源限制：  无法操作彼此的 DOM 元素 无法共享缓存，如 cookie 和 localstorage  JSONP 定义回调函数名称 fn 通过 script 标签的 src 属性请求接口数据 （script 标签不熟浏览器同源策略影响），指定回调函数为 fn，客户端将数据封装到 fn 函数调用后返回。  CORS设置 Access-Control-A">
+<meta property="og:description" content="解决什么问题同源策略是浏览器对JavaScript实施的安全限制，防止恶意的网站访问用户的敏感数据 是什么浏览器同源策略：同协议，域名，端口的资源  无法操作彼此的 DOM 元素 无法共享缓存，如 cookie 和 localstorage  JSONP用不受同源策略限制的 script 的 src， 来请求接口数据，指定回调，让客户端将数据作为回调参数封装，调用后返回  定义回调函数名称 fn">
 <meta property="og:locale">
 <meta property="article:published_time" content="2024-02-25T06:43:00.000Z">
-<meta property="article:modified_time" content="2024-02-25T08:30:58.000Z">
+<meta property="article:modified_time" content="2024-06-18T11:43:38.000Z">
 <meta property="article:author" content="义依雯">
 <meta name="twitter:card" content="summary">
 
@@ -319,12 +319,14 @@
       
 
       
-        <h2 id="为什么"><a href="#为什么" class="headerlink" title="为什么"></a>为什么</h2><p>浏览器同源策略：同协议，域名，端口的资源<br>限制：</p>
+        <h2 id="解决什么问题"><a href="#解决什么问题" class="headerlink" title="解决什么问题"></a>解决什么问题</h2><p>同源策略是浏览器对JavaScript实施的安全限制，防止恶意的网站访问用户的敏感数据</p>
+<h2 id="是什么"><a href="#是什么" class="headerlink" title="是什么"></a>是什么</h2><p>浏览器同源策略：同协议，域名，端口的资源</p>
 <ol>
 <li>无法操作彼此的 DOM 元素</li>
 <li>无法共享缓存，如 cookie 和 localstorage</li>
 </ol>
-<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><ol>
+<h2 id="JSONP"><a href="#JSONP" class="headerlink" title="JSONP"></a>JSONP</h2><p>用不受同源策略限制的 script 的 src， 来请求接口数据，指定回调，让客户端将数据作为回调参数封装，调用后返回</p>
+<ol>
 <li>定义回调函数名称 fn</li>
 <li>通过 script 标签的 src 属性请求接口数据 （script 标签不熟浏览器同源策略影响），指定回调函数为 fn，客户端将数据封装到 fn 函数调用后返回。</li>
 </ol>
@@ -444,7 +446,7 @@
               
                 <a href="/archives%7C%7C%20archive">
               
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">49</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -515,7 +517,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88"><span class="nav-number">1.</span> <span class="nav-text">为什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSONP"><span class="nav-number">2.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CORS"><span class="nav-number">3.</span> <span class="nav-text">CORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">nginx 反向代理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">解决什么问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JSONP"><span class="nav-number">3.</span> <span class="nav-text">JSONP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CORS"><span class="nav-number">4.</span> <span class="nav-text">CORS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="nav-number">5.</span> <span class="nav-text">nginx 反向代理</span></a></li></ol></div>
             
 
           </div>
